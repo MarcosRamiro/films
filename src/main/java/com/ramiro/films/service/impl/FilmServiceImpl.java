@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ramiro.films.dto.Film;
-import com.ramiro.films.dto.FilmSearch;
+import com.ramiro.films.dto.FilmDto;
+import com.ramiro.films.dto.FilmSearchDto;
 import com.ramiro.films.service.FilmService;
 import com.ramiro.films.service.RestClient;
 
@@ -17,7 +17,7 @@ import com.ramiro.films.service.RestClient;
 public class FilmServiceImpl implements FilmService {
 	
 	private final RestClient restClient;
-	private static final int LIMIT = 5;
+	private static final int LIMIT = 10;
 	private static final String TYPE_MOVIE = "movie";
 	
 	Logger logger = LoggerFactory.getLogger(FilmServiceImpl.class);
@@ -28,14 +28,14 @@ public class FilmServiceImpl implements FilmService {
 	}
 	
 	@Override
-	public List<Film> searchFilmByTitle(String title) {
+	public List<FilmDto> searchFilmByTitle(String title) {
 		String querySearch = "s=" + title;
 		int page = 1;
-		FilmSearch filmSearch = restClient
+		FilmSearchDto filmSearch = restClient
 								.query(querySearch)
-								.get(FilmSearch.class);
+								.get(FilmSearchDto.class);
 		
-		List<Film> films = new ArrayList<>();
+		List<FilmDto> films = new ArrayList<>();
 
 		while (filmSearch.succeed() && page < LIMIT) {
 			films.addAll(filmSearch.films().stream().filter(f -> f.type().equals(TYPE_MOVIE)).toList());
@@ -43,17 +43,17 @@ public class FilmServiceImpl implements FilmService {
 			filmSearch = restClient
 					.query(querySearch)
 					.query(queryPage)
-					.get(FilmSearch.class);
+					.get(FilmSearchDto.class);
 		}
 
 		return films;
 	}
 
 	@Override
-	public Film getFilmById(String id) {
+	public FilmDto getFilmById(String id) {
 		logger.info("Get film by id: " + id);
 		String query = "i=" + id;
-		return restClient.query(query).get(Film.class);
+		return restClient.query(query).get(FilmDto.class);
 	}
 
 }

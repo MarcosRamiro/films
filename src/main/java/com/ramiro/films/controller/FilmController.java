@@ -1,6 +1,6 @@
 package com.ramiro.films.controller;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ramiro.films.domain.FilmDataBase;
-import com.ramiro.films.dto.Film;
+import com.ramiro.films.dto.FilmDto;
 import com.ramiro.films.service.FilmService;
 
 @RestController
@@ -24,14 +24,14 @@ public class FilmController {
 	}
 
 	@GetMapping("/id")
-	public Film getFilmById(@RequestParam String id) {
+	public FilmDto getFilmById(@RequestParam String id) {
 		return filmService.getFilmById(id);
 
 	}
 
 	@GetMapping("/title")
-	public Set<Film> searchFilmByTitle(@RequestParam String title) {
-		return filmDataBase.getAllFilms();
+	public List<FilmDto> searchFilmByTitle(@RequestParam String title) {
+		return filmDataBase.getAllFilms().stream().map(f -> FilmDto.of(f)).toList();
 
 	}
 

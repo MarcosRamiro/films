@@ -4,8 +4,9 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ramiro.films.dao.Film;
 
-public record Film(String title, 
+public record FilmDto(String title, 
 					String year,
 					String released,
 					String director, 
@@ -15,7 +16,7 @@ public record Film(String title,
 					String imdbID) {
 
 	@JsonCreator
-	public Film(
+	public FilmDto(
 			@JsonProperty("Title") String title,
 			@JsonProperty("Year") String year,
 			@JsonProperty("Released") String released,
@@ -49,11 +50,25 @@ public record Film(String title,
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Film other = (Film) obj;
+		FilmDto other = (FilmDto) obj;
 		return Objects.equals(actors, other.actors) && Objects.equals(director, other.director)
 				&& Objects.equals(imdbRating, other.imdbRating) && Objects.equals(released, other.released)
 				&& Objects.equals(title, other.title) && Objects.equals(type, other.type)
 				&& Objects.equals(year, other.year);
+	}
+
+	public static FilmDto of(Film filmDao) {
+		
+		return new FilmDto(filmDao.getTitle(),
+						filmDao.getYear(), 
+						filmDao.getReleased(), 
+						filmDao.getDirector(), 
+						filmDao.getActors(), 
+						filmDao.getYear(), 
+						filmDao.getImdbRating(), 
+						filmDao.getImdbID());
+		
+
 	}
 
 }

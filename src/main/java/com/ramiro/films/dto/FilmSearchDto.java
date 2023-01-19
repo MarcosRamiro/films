@@ -5,13 +5,13 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record FilmSearch(List<Film> films, 
+public record FilmSearchDto(List<FilmDto> films, 
 						String totalResults,
 						String response) {
 
 	@JsonCreator
-	public FilmSearch(
-			@JsonProperty("Search") List<Film> films,
+	public FilmSearchDto(
+			@JsonProperty("Search") List<FilmDto> films,
 			@JsonProperty("totalResults") String totalResults,
 			@JsonProperty("Response") String response) {
 
