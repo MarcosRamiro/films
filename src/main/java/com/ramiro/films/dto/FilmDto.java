@@ -67,8 +67,6 @@ public record FilmDto(String title,
 						filmDao.getYear(), 
 						filmDao.getImdbRating(), 
 						filmDao.getImdbID());
-		
-
 	}
 
 }

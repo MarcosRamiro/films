@@ -17,7 +17,7 @@ import com.ramiro.films.service.RestClient;
 public class FilmServiceImpl implements FilmService {
 	
 	private final RestClient restClient;
-	private static final int LIMIT = 10;
+	private static final int LIMIT = 2;
 	private static final String TYPE_MOVIE = "movie";
 	
 	Logger logger = LoggerFactory.getLogger(FilmServiceImpl.class);

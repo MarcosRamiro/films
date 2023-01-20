@@ -20,7 +20,7 @@ import jakarta.persistence.Table;
 public class Match {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "match_id")
 	private long id;
 
@@ -29,11 +29,13 @@ public class Match {
 
 	@Column(name = "status_match")
 	@Enumerated(EnumType.STRING)
-	private final StatusMatchEnum status;
+	private StatusMatchEnum status;
 
 	@OneToMany(mappedBy = "match")
-	private final List<Move> moves;
+	private List<Move> moves;
 
+	public Match() {}
+	
 	public Match(User user, List<Move> moves) {
 		this.user = user;
 		this.status = StatusMatchEnum.OPENED;

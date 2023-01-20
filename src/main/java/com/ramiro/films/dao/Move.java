@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 public class Move {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@ManyToOne
@@ -35,6 +35,7 @@ public class Move {
 	@JoinColumn(name = "match_id")
 	private Match match;
 	
+	public Move() {}
 	
 	public Move(Match match, Film film1, Film film2) {
 		this.match = match;
