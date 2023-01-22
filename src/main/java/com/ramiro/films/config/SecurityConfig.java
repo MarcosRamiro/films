@@ -25,8 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.csrf().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
+				.headers().frameOptions().disable()
+				.and()
 				.authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/api/login", "/api/logout").permitAll()
+				.antMatchers("/api/login", "/h2-console/**").permitAll()
                 .anyRequest().authenticated();
 
 	}

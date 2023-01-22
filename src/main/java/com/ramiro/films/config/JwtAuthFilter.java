@@ -34,7 +34,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 					
 					SecurityContextHolder.getContext().setAuthentication(
 							provider.validateToken(authElements[1]));
-					log.info("validated Bearer Token");
+					log.info("Bearer Token OK");
 				} catch (RuntimeException e) {
 					log.error("Error on validateToken", e);
 					SecurityContextHolder.clearContext();
@@ -42,11 +42,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 				}
 				
 			} else {
-				log.info("Not found Bearer Token");
+				log.info(String.format("Not found Bearer Token. Method: %s Path: %s.",
+						request.getMethod(),
+						request.getServletPath()));
 			}
 
 		} else {
-			log.info("Not found Authentication Header");
+			log.info(String.format("Not found Authentication Header. Method: %s Path: %s.",
+					request.getMethod(),
+					request.getServletPath()));
 		}
 		
 		filterChain.doFilter(request, response);

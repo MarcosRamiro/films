@@ -1,9 +1,12 @@
 package com.ramiro.films.service.impl;
 
 import com.ramiro.films.dto.CredentialsRequest;
+import com.ramiro.films.model.Login;
 import com.ramiro.films.model.User;
+import com.ramiro.films.repository.LoginRepository;
 import com.ramiro.films.repository.UserRepository;
 import com.ramiro.films.service.AuthenticationService;
+import com.ramiro.films.type.StatusLoginEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import java.util.Optional;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
 	private final UserRepository userRepository;
+	private final LoginRepository loginRepository;
 
 	@Override
 	public User validateCredentials(CredentialsRequest credentials) {
@@ -49,6 +53,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		log.info("user not found");
 		throw new AuthenticationCredentialsNotFoundException("invalide username");
 
+	}
+
+	@Override
+	public Login findLogin(User user) {
+
+		Optional<Login> loginOptional = loginRepository.findTop1ByUserAndStatus(user, StatusLoginEnum.OPEN);
+		if (loginOptional.isPresent())
+			return loginOptional.get();
+
+		log.info("login not found");
+
+		throw new AuthenticationCredentialsNotFoundException("login not found");
 	}
 
 }

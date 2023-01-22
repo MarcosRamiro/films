@@ -38,7 +38,7 @@ public class Match {
 	
 	public Match(User user, List<Move> moves) {
 		this.user = user;
-		this.status = StatusMatchEnum.OPENED;
+		this.status = StatusMatchEnum.OPEN;
 		this.moves = moves;
 	}
 

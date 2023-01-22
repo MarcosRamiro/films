@@ -6,7 +6,9 @@ import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
+import com.ramiro.films.model.Login;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -53,14 +55,18 @@ public class UserAuthenticationProvider {
 	
 	public Authentication validateToken(String token) {
 		
-		String login = Jwts.parser()
+		String username = Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-		
-		User user = authenticationService.findByUsername(login);
-		
+
+		User user = authenticationService.findByUsername(username);
+		Login login = authenticationService.findLogin(user);
+
+		if(!isTokenActive(login, token))
+			throw new RuntimeException("token expired by logout");
+
 		return new UsernamePasswordAuthenticationToken(UserDto.of(user), null, Collections.emptyList());
 	}
 
@@ -68,6 +74,10 @@ public class UserAuthenticationProvider {
 	public Authentication validadeCredentials(CredentialsRequest credentials) {
 		User user = authenticationService.validateCredentials(credentials);
 		return new UsernamePasswordAuthenticationToken(UserDto.of(user), null, Collections.emptyList());
+	}
+
+	private boolean isTokenActive(Login login, String token){
+		return login.getToken().equals(token);
 	}
 	
 	

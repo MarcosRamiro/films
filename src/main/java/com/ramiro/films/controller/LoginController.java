@@ -1,5 +1,7 @@
 package com.ramiro.films.controller;
 
+import com.ramiro.films.repository.LoginRepository;
+import com.ramiro.films.service.LoginService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -21,15 +23,18 @@ import com.ramiro.films.dto.UserDto;
 public class LoginController {
 
 	private final UserAuthenticationProvider authenticationProvider;
+	private final LoginService loginService;
 
 	@PostMapping("/login")
 	public ResponseEntity<UserDto> login(@AuthenticationPrincipal UserDto user) {
 		user.setToken(authenticationProvider.createToken(user.getUsername()));
+		loginService.save(user);
 		return ResponseEntity.ok(user);
 	}
 
 	@PostMapping("/logout")
 	public ResponseEntity<Void> signOut(@AuthenticationPrincipal UserDto user) {
+		loginService.logout(user);
 		SecurityContextHolder.clearContext();
 		return ResponseEntity.noContent().build();
 	}

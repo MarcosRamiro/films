@@ -1,82 +1,48 @@
-/*package com.ramiro.films.model;
+package com.ramiro.films.model;
+
+import com.ramiro.films.type.StatusLoginEnum;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "login")
+@NoArgsConstructor
+@Data
 public class Login {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, unique = true, nullable = false)
-	private UUID id;
-	
-	@ManyToOne
-	private User user;
-	
-	@Column(name = "dateTimeStart")
-	@Temporal(TemporalType.TIMESTAMP)
-	private LocalDateTime dateTimeStart;
-	
-	@Column(name = "dateTimeEnd")
-	@Temporal(TemporalType.TIMESTAMP)
-	private LocalDateTime dateTimeEnd;
-	
-	public Login() {}
-	
-	public Login(User user) {
-		this.user = user;
-		this.dateTimeStart = LocalDateTime.now();
-	}
 
-	public UUID getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, unique = true, nullable = false)
+    private long id;
 
-	public User getUser() {
-		return user;
-	}
+    @ManyToOne
+    private User user;
 
-	public LocalDateTime getDateTimeStart() {
-		return dateTimeStart;
-	}
+    @Column(name = "dateTimeStart")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar dateTimeStart = Calendar.getInstance();
 
-	public LocalDateTime getDateTimeEnd() {
-		return dateTimeEnd;
-	}
+    @Column(name = "dateTimeEnd")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar dateTimeEnd;
 
-	public void setId(UUID id) {
-		this.id = id;
-	}
+    @Column(name = "status_login")
+    @Enumerated(EnumType.STRING)
+    private StatusLoginEnum status = StatusLoginEnum.OPEN;
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    @Column(name = "token")
+    private String token;
 
-	public void setDateTimeStart(LocalDateTime dateTimeStart) {
-		this.dateTimeStart = dateTimeStart;
-	}
-
-	public void setDateTimeEnd(LocalDateTime dateTimeEnd) {
-		this.dateTimeEnd = dateTimeEnd;
-	}
-
-	@Override
-	public String toString() {
-		return "Login [id=" + id + ", user=" + user + ", dateTimeStart=" + dateTimeStart + ", dateTimeEnd="
-				+ dateTimeEnd + "]";
-	}
+    public Login(User user, String token){
+        this.user = user;
+        this.token = token;
+    }
 
 }
-*/
