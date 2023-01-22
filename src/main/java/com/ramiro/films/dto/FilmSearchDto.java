@@ -2,24 +2,23 @@ package com.ramiro.films.dto;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public record FilmSearchDto(List<FilmDto> films, 
-						String totalResults,
-						String response) {
+@AllArgsConstructor
+@Data
+public class FilmSearchDto {
 
-	@JsonCreator
-	public FilmSearchDto(
-			@JsonProperty("Search") List<FilmDto> films,
-			@JsonProperty("totalResults") String totalResults,
-			@JsonProperty("Response") String response) {
+	@JsonProperty("Search")
+	private List<FilmDto> films;
 
-		this.films = films;
-		this.totalResults = totalResults;
-		this.response = response;
-	}
-	
+	@JsonProperty("totalResults")
+	private String totalResults;
+
+	@JsonProperty("Response")
+	private String response;
+
 	public boolean succeed() {
 		return this.response.equalsIgnoreCase("True");
 	}

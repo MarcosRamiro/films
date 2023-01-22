@@ -1,7 +1,10 @@
 package com.ramiro.films.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,15 +16,12 @@ import com.ramiro.films.service.FilmService;
 
 @RestController
 @RequestMapping("/films")
+@RequiredArgsConstructor
+@Slf4j
 public class FilmController {
 
 	private final FilmService filmService;
 	private final FilmDataBase filmDataBase;
-
-	public FilmController(FilmService filmService, FilmDataBase filmDataBase) {
-		this.filmService = filmService;
-		this.filmDataBase = filmDataBase;
-	}
 
 	@GetMapping("/id")
 	public FilmDto getFilmById(@RequestParam String id) {
@@ -31,7 +31,8 @@ public class FilmController {
 
 	@GetMapping("/title")
 	public List<FilmDto> searchFilmByTitle(@RequestParam String title) {
-		return filmDataBase.getAllFilms().stream().map(f -> FilmDto.of(f)).toList();
+		log.info("searcing by title: " + title);
+		return filmDataBase.getAllFilms().stream().map(f -> FilmDto.of(f)).collect(Collectors.toList());
 
 	}
 

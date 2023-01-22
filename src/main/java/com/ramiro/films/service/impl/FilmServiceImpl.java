@@ -1,27 +1,28 @@
 package com.ramiro.films.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.ramiro.films.dto.FilmDto;
+import com.ramiro.films.dto.FilmSearchDto;
+import com.ramiro.films.service.FilmService;
+import com.ramiro.films.service.RestClient;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ramiro.films.dto.FilmDto;
-import com.ramiro.films.dto.FilmSearchDto;
-import com.ramiro.films.service.FilmService;
-import com.ramiro.films.service.RestClient;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
+@Slf4j
 public class FilmServiceImpl implements FilmService {
 	
 	private final RestClient restClient;
 	private static final int LIMIT = 2;
 	private static final String TYPE_MOVIE = "movie";
 	
-	Logger logger = LoggerFactory.getLogger(FilmServiceImpl.class);
-
 	@Autowired
 	public FilmServiceImpl(RestClient restClient) {
 		this.restClient = restClient;
@@ -38,7 +39,7 @@ public class FilmServiceImpl implements FilmService {
 		List<FilmDto> films = new ArrayList<>();
 
 		while (filmSearch.succeed() && page < LIMIT) {
-			films.addAll(filmSearch.films().stream().filter(f -> f.type().equals(TYPE_MOVIE)).toList());
+			films.addAll(filmSearch.getFilms().stream().filter((f -> f.getType().equals(TYPE_MOVIE))).collect(Collectors.toList()));
 			String queryPage =  "page=" + ++page;
 			filmSearch = restClient
 					.query(querySearch)
@@ -51,7 +52,7 @@ public class FilmServiceImpl implements FilmService {
 
 	@Override
 	public FilmDto getFilmById(String id) {
-		logger.info("Get film by id: " + id);
+		log.info("Get film by id: " + id);
 		String query = "i=" + id;
 		return restClient.query(query).get(FilmDto.class);
 	}

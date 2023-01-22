@@ -1,16 +1,17 @@
 package com.ramiro.films.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public record UserRequest(String username, String password) {
+@Data
+@NoArgsConstructor
+public class CredentialsRequest {
 
-	@JsonCreator
-	public UserRequest(
-			@JsonProperty("username") String username,
-			@JsonProperty("password") String password) {
-		this.username = username;
-		this.password = password;
-	}
-	
+	@JsonProperty("username")
+	private String username;
+
+	@JsonProperty("password")
+	private String password;
+
 }

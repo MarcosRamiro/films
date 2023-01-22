@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ramiro.films.dao.User;
+import com.ramiro.films.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long>  {
 	

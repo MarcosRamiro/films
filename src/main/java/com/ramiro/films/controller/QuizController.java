@@ -1,23 +1,21 @@
 package com.ramiro.films.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ramiro.films.dao.Match;
-import com.ramiro.films.dao.Move;
-import com.ramiro.films.dao.User;
 import com.ramiro.films.domain.Quiz;
+import com.ramiro.films.model.Match;
+import com.ramiro.films.model.Move;
+import com.ramiro.films.model.User;
 
 @RestController
 @RequestMapping("/quiz")
+@AllArgsConstructor
 public class QuizController {
 
 	private final Quiz quiz;
-	
-	public QuizController(Quiz quiz) {
-		this.quiz = quiz;
-	}
 
 	@PostMapping("/newMatch")
 	public Move newMatch(User user) {

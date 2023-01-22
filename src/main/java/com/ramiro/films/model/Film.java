@@ -1,16 +1,18 @@
-package com.ramiro.films.dao;
+package com.ramiro.films.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.ramiro.films.dto.FilmDto;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "film")
+@NoArgsConstructor
 public class Film {
 	
 	@Id
@@ -39,8 +41,7 @@ public class Film {
 	@Column(name = "imdbId")
 	private String imdbId;
 
-	public Film() {}
-	
+
 	public Film( 
 			String title, 
 			String year, 
@@ -128,19 +129,19 @@ public class Film {
 				+ director + ", actors=" + actors + ", imdbRating=" + imdbRating + ", imdbID=" + imdbId + "]";
 	}
 	
-	public static Film of(FilmDto film) {
+	public static Film of(FilmDto filmDto) {
 		
-		Film filmDao = new Film(
-				film.title(),
-				film.year(),
-				film.released(),
-				film.director(),
-				film.actors(),
-				film.imdbRating(),
-				film.imdbID()
+		Film film = new Film(
+				filmDto.getTitle(),
+				filmDto.getYear(),
+				filmDto.getReleased(),
+				filmDto.getDirector(),
+				filmDto.getActors(),
+				filmDto.getImdbRating(),
+				filmDto.getImdbID()
 				);
 		
-		return filmDao;
+		return film;
 			
 	}
 	

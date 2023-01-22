@@ -1,8 +1,8 @@
 package com.ramiro.films.domain;
 
-import com.ramiro.films.dao.Match;
-import com.ramiro.films.dao.Move;
-import com.ramiro.films.dao.User;
+import com.ramiro.films.model.Match;
+import com.ramiro.films.model.Move;
+import com.ramiro.films.model.User;
 
 public interface Quiz {
 	
