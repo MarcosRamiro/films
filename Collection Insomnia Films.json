@@ -1,0 +1,245 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2023-01-24T01:43:58.056Z",
+    "__export_source": "insomnia.desktop.app:v2022.7.5",
+    "resources": [
+        {
+            "_id": "req_a55ed99032464e77b15d811e5722a9c8",
+            "parentId": "wrk_015b38ab555d41ee827f841f37c54342",
+            "modified": 1674524401753,
+            "created": 1673919244536,
+            "url": "http://localhost:8080/api/login",
+            "name": "Login",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"username\":\"JOSE\",\n\t\"password\":\"654321\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_735675d79ca04b58b53f851bf06bac55"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1674206013178.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "wrk_015b38ab555d41ee827f841f37c54342",
+            "parentId": null,
+            "modified": 1674180867890,
+            "created": 1673916510432,
+            "name": "Films - OMBD API",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_272c4c59f1eb46deada8f68a70719ab8",
+            "parentId": "wrk_015b38ab555d41ee827f841f37c54342",
+            "modified": 1674420944661,
+            "created": 1674419373707,
+            "url": "http://localhost:8080/quiz/newMatch",
+            "name": "Iniciar Partida",
+            "description": "",
+            "method": "POST",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {
+                "type": "bearer",
+                "token": "{% response 'body', 'req_a55ed99032464e77b15d811e5722a9c8', 'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+            },
+            "metaSortKey": -1674055314719.625,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_01d7a25b9f3d448cb1fb0e2ac45ec15d",
+            "parentId": "wrk_015b38ab555d41ee827f841f37c54342",
+            "modified": 1674422808078,
+            "created": 1674422780830,
+            "url": "http://localhost:8080/quiz/newMove",
+            "name": "Próxima jogada",
+            "description": "",
+            "method": "POST",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {
+                "type": "bearer",
+                "token": "{% response 'body', 'req_a55ed99032464e77b15d811e5722a9c8', 'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+            },
+            "metaSortKey": -1673985922188.8125,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_387f17d3a37643388613736ce0dd873b",
+            "parentId": "wrk_015b38ab555d41ee827f841f37c54342",
+            "modified": 1674444432378,
+            "created": 1674422871920,
+            "url": "http://localhost:8080/quiz/sendMove",
+            "name": "Enviar Jogada",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"filme_com_maior_avaliacao\": \"B\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{% response 'body', 'req_a55ed99032464e77b15d811e5722a9c8', 'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+            },
+            "metaSortKey": -1673951225923.4062,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_98911540d2c34dd5b214f828b683a747",
+            "parentId": "wrk_015b38ab555d41ee827f841f37c54342",
+            "modified": 1674524193889,
+            "created": 1674524074145,
+            "url": "http://localhost:8080/ranking",
+            "name": "Ranking",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {
+                "type": "bearer",
+                "token": "{% response 'body', 'req_a55ed99032464e77b15d811e5722a9c8', 'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+            },
+            "metaSortKey": -1673933877790.7031,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_9b37e1579d75439b92aaaad43453c10c",
+            "parentId": "wrk_015b38ab555d41ee827f841f37c54342",
+            "modified": 1674419553807,
+            "created": 1674406944457,
+            "url": "http://localhost:8080/api/logout",
+            "name": "Logout",
+            "description": "",
+            "method": "POST",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {
+                "type": "bearer",
+                "token": "{% response 'body', 'req_a55ed99032464e77b15d811e5722a9c8', 'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+            },
+            "metaSortKey": -1673916529658,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "env_10d4136dd44671c8b45c967222c1b6310aef155b",
+            "parentId": "wrk_015b38ab555d41ee827f841f37c54342",
+            "modified": 1673916510977,
+            "created": 1673916510977,
+            "name": "Base Environment",
+            "data": {},
+            "dataPropertyOrder": null,
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1673916510977,
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_10d4136dd44671c8b45c967222c1b6310aef155b",
+            "parentId": "wrk_015b38ab555d41ee827f841f37c54342",
+            "modified": 1674186899309,
+            "created": 1673916511007,
+            "name": "Default Jar",
+            "cookies": [
+                {
+                    "key": "bezkoder",
+                    "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJjb3MiLCJpYXQiOjE2NzM5MTkyODgsImV4cCI6MTY3NDAwNTY4OH0.pxi3YKKfYEmP5UCHsjB048A27PYcKRdfdv0Dv3Yz2r9So-ujIQZZls2xyO3mHLOuDKLqqdHc8x2V75br2U4nZw",
+                    "expires": "2023-01-18T01:34:49.000Z",
+                    "maxAge": 86400,
+                    "domain": "localhost",
+                    "path": "/api",
+                    "httpOnly": true,
+                    "hostOnly": true,
+                    "creation": "2023-01-17T01:34:49.039Z",
+                    "lastAccessed": "2023-01-17T01:34:49.039Z",
+                    "id": "10478600722570164"
+                },
+                {
+                    "key": "JSESSIONID",
+                    "value": "D1E18214A30656B8FC288C9E9049D16D",
+                    "domain": "localhost",
+                    "path": "/",
+                    "httpOnly": true,
+                    "hostOnly": true,
+                    "creation": "2023-01-17T02:05:26.690Z",
+                    "lastAccessed": "2023-01-20T03:54:59.309Z",
+                    "id": "25899046925988567"
+                }
+            ],
+            "_type": "cookie_jar"
+        },
+        {
+            "_id": "spc_34d08ebd81b6400683db5d70035d8bdc",
+            "parentId": "wrk_015b38ab555d41ee827f841f37c54342",
+            "modified": 1673916510436,
+            "created": 1673916510436,
+            "fileName": "Films - OMBD API",
+            "contents": "",
+            "contentType": "yaml",
+            "_type": "api_spec"
+        }
+    ]
+}
