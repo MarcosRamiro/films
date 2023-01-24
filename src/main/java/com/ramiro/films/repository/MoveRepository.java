@@ -1,9 +1,8 @@
 package com.ramiro.films.repository;
 
+import com.ramiro.films.model.Move;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ramiro.films.model.Move;
-
-public interface MoveRepository extends JpaRepository<Move, Long>  {
+public interface MoveRepository extends JpaRepository<Move, Long> {
 
 }

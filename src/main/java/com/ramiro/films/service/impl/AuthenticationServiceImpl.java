@@ -9,8 +9,6 @@ import com.ramiro.films.service.AuthenticationService;
 import com.ramiro.films.type.StatusLoginEnum;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -21,50 +19,50 @@ import java.util.Optional;
 @Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-	private final UserRepository userRepository;
-	private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
+    private final LoginRepository loginRepository;
 
-	@Override
-	public User validateCredentials(CredentialsRequest credentials) {
-		log.debug("Start Login validate credentials: " + credentials);
-		User user = this.findByUsername(credentials.getUsername());
+    @Override
+    public User validateCredentials(CredentialsRequest credentials) {
+        log.debug("Start Login validate credentials: " + credentials);
+        User user = this.findByUsername(credentials.getUsername());
 
-		if (isUserValid(user, credentials)) {
-			log.info("Login efetuado com sucesso. username: " + user.getUsername());
-			return user;
-		}
-		
-		log.info("Invalided credentials");
-		throw new AuthenticationCredentialsNotFoundException("invalided username/password");
-	}
+        if (isUserValid(user, credentials)) {
+            log.info("Login efetuado com sucesso. username: " + user.getUsername());
+            return user;
+        }
 
-	private boolean isUserValid(User user, CredentialsRequest credentials) {
-		return user.getPassword().equals(credentials.getPassword());
-	}
+        log.info("Invalided credentials");
+        throw new AuthenticationCredentialsNotFoundException("invalided username/password");
+    }
 
-	@Override
-	public User findByUsername(String username) {
+    private boolean isUserValid(User user, CredentialsRequest credentials) {
+        return user.getPassword().equals(credentials.getPassword());
+    }
 
-		Optional<User> userOptional = userRepository.findTop1ByUsername(username);
+    @Override
+    public User findByUsername(String username) {
 
-		if (userOptional.isPresent())
-			return userOptional.get();
+        Optional<User> userOptional = userRepository.findTop1ByUsername(username);
 
-		log.info("user not found");
-		throw new AuthenticationCredentialsNotFoundException("invalide username");
+        if (userOptional.isPresent())
+            return userOptional.get();
 
-	}
+        log.info("user not found");
+        throw new AuthenticationCredentialsNotFoundException("invalide username");
 
-	@Override
-	public Login findLogin(User user) {
+    }
 
-		Optional<Login> loginOptional = loginRepository.findTop1ByUserAndStatus(user, StatusLoginEnum.OPEN);
-		if (loginOptional.isPresent())
-			return loginOptional.get();
+    @Override
+    public Login findLogin(User user) {
 
-		log.info("login not found");
+        Optional<Login> loginOptional = loginRepository.findTop1ByUserAndStatus(user, StatusLoginEnum.OPEN);
+        if (loginOptional.isPresent())
+            return loginOptional.get();
 
-		throw new AuthenticationCredentialsNotFoundException("login not found");
-	}
+        log.info("login not found");
+
+        throw new AuthenticationCredentialsNotFoundException("login not found");
+    }
 
 }

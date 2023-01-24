@@ -4,12 +4,8 @@ import com.ramiro.films.type.StatusLoginEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.UUID;
-
 import javax.persistence.*;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "login")
@@ -40,7 +36,7 @@ public class Login {
     @Column(name = "token")
     private String token;
 
-    public Login(User user, String token){
+    public Login(User user, String token) {
         this.user = user;
         this.token = token;
     }

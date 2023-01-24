@@ -6,7 +6,6 @@ import com.ramiro.films.model.User;
 import com.ramiro.films.repository.LoginRepository;
 import com.ramiro.films.service.LoginService;
 import com.ramiro.films.type.StatusLoginEnum;
-import com.ramiro.films.type.StatusMatchEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
 
     }
 
-    private void updateStatusLogin(StatusLoginEnum statusToBe, StatusLoginEnum statusAsIs, User user){
+    private void updateStatusLogin(StatusLoginEnum statusToBe, StatusLoginEnum statusAsIs, User user) {
         loginRepository.updateStatusAndDateTimeEndByStatusAndUser(statusToBe.toString(), statusAsIs.toString(), user.getId());
     }
 

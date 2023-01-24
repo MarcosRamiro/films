@@ -7,11 +7,11 @@ import com.ramiro.films.model.Move;
 import com.ramiro.films.model.User;
 
 public interface Quiz {
-	
-	Match newMatch(User user);
 
-	Move newMove(User user);
+    Match newMatch(User user);
 
-	MoveFeedbackResponseDto sendMove(User user, MoveRequestDto moveRequestDto);
+    Move newMove(User user);
+
+    MoveFeedbackResponseDto sendMove(User user, MoveRequestDto moveRequestDto);
 
 }

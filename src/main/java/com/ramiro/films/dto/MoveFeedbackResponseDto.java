@@ -9,7 +9,7 @@ public class MoveFeedbackResponseDto {
     @JsonProperty("resultado")
     public String result;
 
-    public MoveFeedbackResponseDto(String result){
+    public MoveFeedbackResponseDto(String result) {
         this.result = result;
     }
 

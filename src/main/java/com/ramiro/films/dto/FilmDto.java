@@ -1,6 +1,5 @@
 package com.ramiro.films.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ramiro.films.model.Film;
 import lombok.AllArgsConstructor;
@@ -10,34 +9,34 @@ import lombok.Data;
 @AllArgsConstructor
 public class FilmDto {
 
-	@JsonProperty("Title")
-	private String title;
+    @JsonProperty("Title")
+    private String title;
 
-	@JsonProperty("Year")
-	private String year;
+    @JsonProperty("Year")
+    private String year;
 
-	@JsonProperty("Released")
-	private String released;
+    @JsonProperty("Released")
+    private String released;
 
-	@JsonProperty("Director")
-	private String director;
+    @JsonProperty("Director")
+    private String director;
 
-	@JsonProperty("Actors")
-	private String actors;
+    @JsonProperty("Actors")
+    private String actors;
 
-	@JsonProperty("Type")
-	private String type;
+    @JsonProperty("Type")
+    private String type;
 
-	@JsonProperty("imdbRating")
-	private String imdbRating;
+    @JsonProperty("imdbRating")
+    private String imdbRating;
 
-	@JsonProperty("imdbID")
-	private String imdbID;
+    @JsonProperty("imdbID")
+    private String imdbID;
 
-	public static FilmDto of(Film film) {
+    public static FilmDto of(Film film) {
 
-		return new FilmDto(film.getTitle(), film.getYear(), film.getReleased(), film.getDirector(),
-				film.getActors(), film.getYear(), film.getImdbRating(), film.getImdbID());
-	}
+        return new FilmDto(film.getTitle(), film.getYear(), film.getReleased(), film.getDirector(),
+                film.getActors(), film.getYear(), film.getImdbRating(), film.getImdbID());
+    }
 
 }

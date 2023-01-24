@@ -1,13 +1,12 @@
 package com.ramiro.films.repository;
 
-import java.util.List;
-
+import com.ramiro.films.model.Film;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ramiro.films.model.Film;
+import java.util.List;
 
-public interface FilmRepository extends  JpaRepository<Film, Long>  {
+public interface FilmRepository extends JpaRepository<Film, Long> {
 
-	List<Film> findTop2ByOrderByTitleAsc();
+    List<Film> findTop2ByOrderByTitleAsc();
 
 }

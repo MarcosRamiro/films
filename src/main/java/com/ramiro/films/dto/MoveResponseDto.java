@@ -16,7 +16,7 @@ public class MoveResponseDto {
     @JsonProperty("filme_B")
     public FilmResponseDto filmB;
 
-    public static MoveResponseDto of(Move move){
+    public static MoveResponseDto of(Move move) {
         MoveResponseDto moveResponseDto = new MoveResponseDto();
         moveResponseDto.setFilmA(FilmResponseDto.of(move.getFilmA()));
         moveResponseDto.setFilmB(FilmResponseDto.of(move.getFilmB()));

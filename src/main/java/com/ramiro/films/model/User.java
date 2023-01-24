@@ -1,61 +1,57 @@
 package com.ramiro.films.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 public class User {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(name = "username")
-	private String username;
-	
-	@Column(name = "password")
-	private String password;
-	
-	public User() {}
 
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-	public long getId() {
-		return id;
-	}
+    @Column(name = "username")
+    private String username;
 
-	public String getUsername() {
-		return username;
-	}
+    @Column(name = "password")
+    private String password;
 
-	public String getPassword() {
-		return password;
-	}
+    public User() {
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
-	}
-	
+    public String getPassword() {
+        return password;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", username=" + username + ", password=" + password + "]";
+    }
+
 }
 

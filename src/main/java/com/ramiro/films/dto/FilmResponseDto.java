@@ -24,8 +24,8 @@ public class FilmResponseDto {
     @JsonProperty("actors")
     private String actors;
 
-    public static FilmResponseDto of(Film film){
-        return new FilmResponseDto(film.getTitle(),film.getYear(), film.getReleased(), film.getDirector(), film.getActors());
+    public static FilmResponseDto of(Film film) {
+        return new FilmResponseDto(film.getTitle(), film.getYear(), film.getReleased(), film.getDirector(), film.getActors());
 
     }
 

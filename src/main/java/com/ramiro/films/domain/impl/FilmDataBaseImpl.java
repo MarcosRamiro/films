@@ -21,46 +21,46 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FilmDataBaseImpl implements FilmDataBase {
 
-	private final FilmService filmService;
-	private final FilmRepository filmRepository;
-	
-	private static Queue<String> WORDS_TO_SEARCH_FILMS = new LinkedList<>();
+    private final FilmService filmService;
+    private final FilmRepository filmRepository;
 
-	static {
-		WORDS_TO_SEARCH_FILMS.addAll(Arrays.asList("paz","war","love","sex","york","amor","guerra"));
-	}
+    private static Queue<String> WORDS_TO_SEARCH_FILMS = new LinkedList<>();
 
-	public List<Film> getAllFilms() {
-		return this.filmRepository.findAll();
-	}
-	
-	public List<Film> getTwoFilms() {
-		return this.filmRepository.findTop2ByOrderByTitleAsc();
-	}
+    static {
+        WORDS_TO_SEARCH_FILMS.addAll(Arrays.asList("paz", "war", "love", "sex", "york", "amor", "guerra"));
+    }
 
-	@PostConstruct
-	public void uploadInitialFilms() {
-		uploadFilms();
-	}
+    public List<Film> getAllFilms() {
+        return this.filmRepository.findAll();
+    }
 
-	public void uploadFilms() {
+    public List<Film> getTwoFilms() {
+        return this.filmRepository.findTop2ByOrderByTitleAsc();
+    }
 
-		log.info("Searching Films...");
-		String word = WORDS_TO_SEARCH_FILMS.poll();
+    @PostConstruct
+    public void uploadInitialFilms() {
+        uploadFilms();
+    }
 
-		if(word == null)
-			throw new RuntimeException("word list is empty");
+    public void uploadFilms() {
 
-		List<FilmDto> searchFilmByTitle = this.filmService.searchFilmByTitle(word);
-		log.info("Films Found: " + searchFilmByTitle.size());
-		List<FilmDto> listFilms =
-								searchFilmByTitle.stream()
-									.map(f -> this.filmService.getFilmById(f.getImdbID()))
-									.filter(f -> !f.getImdbRating().equals("N/A"))
-										.collect(Collectors.toList());
-		listFilms.stream().forEach(f -> filmRepository.save(Film.of(f)));
-		log.info("Films in DataBase: " + filmRepository.count());
-		log.info("Finished Search Films...");
-	}
+        log.info("Searching Films...");
+        String word = WORDS_TO_SEARCH_FILMS.poll();
+
+        if (word == null)
+            throw new RuntimeException("word list is empty");
+
+        List<FilmDto> searchFilmByTitle = this.filmService.searchFilmByTitle(word);
+        log.info("Films Found: " + searchFilmByTitle.size());
+        List<FilmDto> listFilms =
+                searchFilmByTitle.stream()
+                        .map(f -> this.filmService.getFilmById(f.getImdbID()))
+                        .filter(f -> !f.getImdbRating().equals("N/A"))
+                        .collect(Collectors.toList());
+        listFilms.stream().forEach(f -> filmRepository.save(Film.of(f)));
+        log.info("Films in DataBase: " + filmRepository.count());
+        log.info("Finished Search Films...");
+    }
 
 }
