@@ -1,6 +1,8 @@
 package com.ramiro.films.controller;
 
 import com.ramiro.films.config.UserAuthenticationProvider;
+import com.ramiro.films.domain.Quiz;
+import com.ramiro.films.domain.impl.QuizImpl;
 import com.ramiro.films.dto.UserDto;
 import com.ramiro.films.service.LoginService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class LoginController {
 
     private final UserAuthenticationProvider authenticationProvider;
     private final LoginService loginService;
+    private final Quiz quiz;
 
     @PostMapping("/login")
     public ResponseEntity<UserDto> login(@AuthenticationPrincipal UserDto user) {
@@ -29,6 +32,7 @@ public class LoginController {
     @PostMapping("/logout")
     public ResponseEntity<Void> signOut(@AuthenticationPrincipal UserDto user) {
         loginService.logout(user);
+        quiz.finalizeMatch(user.getUser());
         SecurityContextHolder.clearContext();
         return ResponseEntity.noContent().build();
     }

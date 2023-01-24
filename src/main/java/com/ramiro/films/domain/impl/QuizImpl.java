@@ -133,6 +133,15 @@ public class QuizImpl implements Quiz {
         return prepareResult(moveRequestDto, match, move);
     }
 
+    @Override
+    public void finalizeMatch(User user) {
+
+        Match match = getMatch(user);
+        match.setStatus(StatusMatchEnum.CLOSED);
+        matchRepository.save(match);
+
+    }
+
     private MoveFeedbackResponseDto prepareResult(MoveRequestDto moveRequestDto, Match match, Move move) {
         String message;
         Film film = moveRequestDto.getFilmeComMaiorAvaliacao().equals(FilmOptionEnum.A) ? move.getFilmA() : move.getFilmB();

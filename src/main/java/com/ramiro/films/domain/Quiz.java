@@ -14,4 +14,6 @@ public interface Quiz {
 
     MoveFeedbackResponseDto sendMove(User user, MoveRequestDto moveRequestDto);
 
+    void finalizeMatch(User user);
+
 }
