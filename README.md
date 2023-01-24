@@ -17,6 +17,9 @@ No Insomnia, deve-se seguir a proposta abaixo:
 - Ranking
 - Lougout
 
+Para consultar a base de dados, acessar o endereço (username: sa - sem senha):
+http://localhost:8080/h2-console/
+
 **Usuários**
 
 Há dois usuários pré-cadastrado no Sistema, ambos estão no arquivo data.sql.
