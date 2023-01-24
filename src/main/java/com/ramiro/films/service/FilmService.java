@@ -6,7 +6,7 @@ import com.ramiro.films.dto.FilmDto;
 
 public interface FilmService {
 	
-	List<FilmDto> searchFilmByTitle(String id);
+	List<FilmDto> searchFilmByTitle(String title);
 
 	FilmDto getFilmById(String id);
 

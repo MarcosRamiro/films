@@ -1,22 +1,20 @@
 package com.ramiro.films.domain.impl;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.stream.Collectors;
-
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
 import com.ramiro.films.domain.FilmDataBase;
 import com.ramiro.films.dto.FilmDto;
 import com.ramiro.films.model.Film;
 import com.ramiro.films.repository.FilmRepository;
 import com.ramiro.films.service.FilmService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -42,8 +40,18 @@ public class FilmDataBaseImpl implements FilmDataBase {
 
 	@PostConstruct
 	public void uploadInitialFilms() {
+		uploadFilms();
+	}
+
+	public void uploadFilms() {
+
 		log.info("Searching Films...");
-		List<FilmDto> searchFilmByTitle = this.filmService.searchFilmByTitle(WORDS_TO_SEARCH_FILMS.poll());
+		String word = WORDS_TO_SEARCH_FILMS.poll();
+
+		if(word == null)
+			throw new RuntimeException("word list is empty");
+
+		List<FilmDto> searchFilmByTitle = this.filmService.searchFilmByTitle(word);
 		log.info("Films Found: " + searchFilmByTitle.size());
 		List<FilmDto> listFilms =
 								searchFilmByTitle.stream()
@@ -54,5 +62,5 @@ public class FilmDataBaseImpl implements FilmDataBase {
 		log.info("Films in DataBase: " + filmRepository.count());
 		log.info("Finished Search Films...");
 	}
-	
+
 }

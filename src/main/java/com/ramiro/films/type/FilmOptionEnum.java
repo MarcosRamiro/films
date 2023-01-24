@@ -1,2 +1,6 @@
-package com.ramiro.films.type;public class FilmOptionEnum {
+package com.ramiro.films.type;
+
+public enum FilmOptionEnum {
+    A,
+    B;
 }

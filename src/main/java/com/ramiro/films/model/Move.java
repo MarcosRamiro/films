@@ -22,10 +22,10 @@ public class Move {
 	private long id;
 	
 	@ManyToOne
-	private Film film1;
+	private Film filmA;
 	
 	@ManyToOne
-	private Film film2;
+	private Film filmB;
 	
 	@Column(name = "status_move")
 	@Enumerated(EnumType.STRING)
@@ -37,10 +37,10 @@ public class Move {
 	
 	public Move() {}
 	
-	public Move(Match match, Film film1, Film film2) {
+	public Move(Match match, Film filmA, Film filmB) {
 		this.match = match;
-		this.film1 = film1;
-		this.film2 =film2;
+		this.filmA = filmA;
+		this.filmB =filmB;
 		this.status = StatusMoveEnum.PENDING;
 	}
 
@@ -74,25 +74,21 @@ public class Move {
 		this.match = match;
 	}
 	
-	public Film getFilm1() {
-		return film1;
+	public Film getFilmA() {
+		return filmA;
 	}
 
-
-	public Film getFilm2() {
-		return film2;
+	public Film getFilmB() {
+		return filmB;
 	}
 
-
-	public void setFilm1(Film film1) {
-		this.film1 = film1;
+	public void setFilmA(Film filmA) {
+		this.filmA = filmA;
 	}
 
-
-	public void setFilm2(Film film2) {
-		this.film2 = film2;
+	public void setFilmB(Film filmB) {
+		this.filmB = filmB;
 	}
-
 
 	@Override
 	public String toString() {

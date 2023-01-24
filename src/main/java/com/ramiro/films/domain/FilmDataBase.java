@@ -10,4 +10,6 @@ public interface FilmDataBase {
 
 	List<Film> getTwoFilms();
 
+	void uploadFilms();
+
 }

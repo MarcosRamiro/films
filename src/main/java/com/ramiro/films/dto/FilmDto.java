@@ -1,5 +1,6 @@
 package com.ramiro.films.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ramiro.films.model.Film;
 import lombok.AllArgsConstructor;

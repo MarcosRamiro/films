@@ -34,12 +34,16 @@ public class Match {
 	@OneToMany(mappedBy = "match")
 	private List<Move> moves;
 
+	@Column(name = "totalError")
+	private int totalErro;
+
 	public Match() {}
 	
 	public Match(User user, List<Move> moves) {
 		this.user = user;
 		this.status = StatusMatchEnum.OPEN;
 		this.moves = moves;
+		this.totalErro = 0;
 	}
 
 	public long getId() {
@@ -66,9 +70,25 @@ public class Match {
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return "Match [id=" + id + ", user=" + user + ", status=" + status + ", moves=" + moves + "]";
+	public void setStatus(StatusMatchEnum status) {
+		this.status = status;
 	}
+
+	public void setMoves(List<Move> moves) {
+		this.moves = moves;
+	}
+
+	public int getTotalErro() {
+		return totalErro;
+	}
+
+	public void setTotalErro(int totalErro) {
+		this.totalErro = totalErro;
+	}
+
+	public void addError(){
+		this.totalErro++;
+	}
+
 
 }
