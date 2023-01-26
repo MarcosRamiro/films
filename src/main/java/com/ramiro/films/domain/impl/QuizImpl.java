@@ -69,12 +69,12 @@ public class QuizImpl implements Quiz {
         if (movePending.isPresent())
             return movePending.get();
 
-        List<Film> pageFilms = firstPageFilms();
+        List<Film> pageFilms = getAllFilms();
 
         Optional<Move> moveOptionalFinal = generateMove(match, pageFilms);
         while (moveOptionalFinal.isEmpty()) {
             filmDataBase.uploadFilms();
-            pageFilms = firstPageFilms();
+            pageFilms = getAllFilms();
             moveOptionalFinal = generateMove(match, pageFilms);
         }
 
@@ -158,15 +158,16 @@ public class QuizImpl implements Quiz {
         return new MoveFeedbackResponseDto(message);
     }
 
-    public Move firstMove(Match match) {
+    private Move firstMove(Match match) {
         List<Film> films = filmDataBase.getTwoFilms();
         Film film1 = films.remove(0);
         Film film2 = films.remove(0);
         Move move = new Move(match, film1, film2);
-        return moveRepository.save(move);
+        moveRepository.save(move);
+        return move;
     }
 
-    private List<Film> firstPageFilms() {
+    private List<Film> getAllFilms() {
         return filmRepository.findAll();
 
     }
