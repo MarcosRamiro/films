@@ -4,6 +4,7 @@ import com.ramiro.films.domain.FilmDataBase;
 import com.ramiro.films.domain.Quiz;
 import com.ramiro.films.dto.MoveFeedbackResponseDto;
 import com.ramiro.films.dto.MoveRequestDto;
+import com.ramiro.films.handler.exceptions.MatchNotFoundException;
 import com.ramiro.films.model.Film;
 import com.ramiro.films.model.Match;
 import com.ramiro.films.model.Move;
@@ -14,6 +15,7 @@ import com.ramiro.films.repository.MoveRepository;
 import com.ramiro.films.type.FilmOptionEnum;
 import com.ramiro.films.type.StatusMatchEnum;
 import com.ramiro.films.type.StatusMoveEnum;
+import com.ramiro.films.handler.exceptions.MoveNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -97,7 +99,7 @@ public class QuizImpl implements Quiz {
     private Match getMatch(User user) {
         Optional<Match> matchOptional = matchRepository.findTop1ByUserAndStatus(user, StatusMatchEnum.OPEN);
         if (!matchOptional.isPresent())
-            throw new RuntimeException("match not found or finished");
+            throw new MatchNotFoundException("Não há uma partida aberta. Inicie uma nova partida em 'Iniciar partida'.");
         return matchOptional.get();
     }
 
@@ -108,7 +110,7 @@ public class QuizImpl implements Quiz {
 
         Optional<Move> moveOptionalPending = match.getMoves().stream().filter(m -> m.getStatus().equals(StatusMoveEnum.PENDING)).findFirst();
         if (!moveOptionalPending.isPresent())
-            throw new RuntimeException("move pending not found");
+            throw new MoveNotFoundException("Não há jogada pendente. Vá para 'Próxima jogada'.");
 
         Move move = moveOptionalPending.get();
 
