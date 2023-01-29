@@ -1,13 +1,17 @@
 package com.ramiro.films.model;
 
 import com.ramiro.films.dto.FilmDto;
+import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "film")
 @NoArgsConstructor
+@Data
 public class Film {
 
     @Id
@@ -27,7 +31,7 @@ public class Film {
     @Column(name = "director")
     private String director;
 
-    @Column(name = "actors")
+     @Column(name = "actors")
     private String actors;
 
     @Column(name = "imdbRating")
@@ -35,7 +39,6 @@ public class Film {
 
     @Column(name = "imdbId")
     private String imdbId;
-
 
     public Film(
             String title,
@@ -52,70 +55,6 @@ public class Film {
         this.actors = actors;
         this.imdbRating = imdbRating;
         this.imdbId = imdbId;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public String getReleased() {
-        return released;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public String getActors() {
-        return actors;
-    }
-
-    public String getImdbRating() {
-        return imdbRating;
-    }
-
-    public String getImdbID() {
-        return imdbId;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-    public void setReleased(String released) {
-        this.released = released;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    public void setActors(String actors) {
-        this.actors = actors;
-    }
-
-    public void setImdbRating(String imdbRating) {
-        this.imdbRating = imdbRating;
-    }
-
-    public void setImdbID(String imdbID) {
-        this.imdbId = imdbID;
     }
 
     public static Film of(FilmDto filmDto) {

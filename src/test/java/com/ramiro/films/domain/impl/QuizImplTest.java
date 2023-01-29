@@ -293,15 +293,15 @@ public class QuizImplTest {
         List<Film> films = new ArrayList<>();
         Film film = new Film("A dama e o vagabundo", "2000", "2000", "Arthur Silva"
                 , "Alan Silva, Rodrigo alberto", "9.00", "1");
-        film.setId(Long.valueOf(film.getImdbID()));
+        film.setId(Long.valueOf(film.getImdbId()));
         films.add(film);
         film = new Film("A viagem de barco", "2000", "2000", "Arthur Silva"
                 , "Alan Silva, Rodrigo alberto", "6.00", "2");
-        film.setId(Long.valueOf(film.getImdbID()));
+        film.setId(Long.valueOf(film.getImdbId()));
         films.add(film);
         film = new Film("o mar azul", "2000", "2000", "Arthur Silva"
                 , "Alan Silva, Rodrigo alberto", "8.00", "3");
-        film.setId(Long.valueOf(film.getImdbID()));
+        film.setId(Long.valueOf(film.getImdbId()));
         films.add(film);
         return films;
     }
@@ -310,7 +310,7 @@ public class QuizImplTest {
         List<Film> films = new ArrayList<>();
         Film film = new Film("Na estrada", "2000", "2000", "Arthur Silva"
                 , "Alan Silva, Rodrigo alberto", "9.00", "4");
-        film.setId(Long.valueOf(film.getImdbID()));
+        film.setId(Long.valueOf(film.getImdbId()));
         films.add(film);
         return films;
     }

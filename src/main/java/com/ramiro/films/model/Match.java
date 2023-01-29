@@ -1,12 +1,14 @@
 package com.ramiro.films.model;
 
 import com.ramiro.films.type.StatusMatchEnum;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "match")
+@Data
 public class Match {
 
     @Id
@@ -35,46 +37,6 @@ public class Match {
         this.status = StatusMatchEnum.OPEN;
         this.moves = moves;
         this.totalErro = 0;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public StatusMatchEnum getStatus() {
-        return status;
-    }
-
-    public List<Move> getMoves() {
-        return moves;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setStatus(StatusMatchEnum status) {
-        this.status = status;
-    }
-
-    public void setMoves(List<Move> moves) {
-        this.moves = moves;
-    }
-
-    public int getTotalErro() {
-        return totalErro;
-    }
-
-    public void setTotalErro(int totalErro) {
-        this.totalErro = totalErro;
     }
 
     public void addError() {

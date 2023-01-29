@@ -1,11 +1,13 @@
 package com.ramiro.films.model;
 
 import com.ramiro.films.type.StatusMoveEnum;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "move")
+@Data
 public class Move {
 
     @Id
@@ -34,51 +36,6 @@ public class Move {
         this.filmA = filmA;
         this.filmB = filmB;
         this.status = StatusMoveEnum.PENDING;
-    }
-
-
-    public long getId() {
-        return id;
-    }
-
-
-    public StatusMoveEnum getStatus() {
-        return status;
-    }
-
-
-    public Match getMatch() {
-        return match;
-    }
-
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-
-    public void setStatus(StatusMoveEnum status) {
-        this.status = status;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
-    }
-
-    public Film getFilmA() {
-        return filmA;
-    }
-
-    public Film getFilmB() {
-        return filmB;
-    }
-
-    public void setFilmA(Film filmA) {
-        this.filmA = filmA;
-    }
-
-    public void setFilmB(Film filmB) {
-        this.filmB = filmB;
     }
 
 }

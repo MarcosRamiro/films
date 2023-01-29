@@ -36,7 +36,7 @@ public class FilmDto {
     public static FilmDto of(Film film) {
 
         return new FilmDto(film.getTitle(), film.getYear(), film.getReleased(), film.getDirector(),
-                film.getActors(), film.getYear(), film.getImdbRating(), film.getImdbID());
+                film.getActors(), film.getYear(), film.getImdbRating(), film.getImdbId());
     }
 
 }
