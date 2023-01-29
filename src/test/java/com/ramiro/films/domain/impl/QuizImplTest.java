@@ -157,7 +157,7 @@ public class QuizImplTest {
         moveFeedbackResponseDto = quiz.sendMove(mock(User.class), moveRequestDtoFilmA);
 
         assertEquals("GAME OVER! Compare seu resultado com os outros competidores.", moveFeedbackResponseDto.getResult());
-        assertEquals(match.getStatus(), StatusMatchEnum.CLOSED);
+        assertEquals(StatusMatchEnum.CLOSED, match.getStatus());
         verify(matchRepository, times(1)).save(match);
         verify(moveRepository, times(4)).save(any());
 

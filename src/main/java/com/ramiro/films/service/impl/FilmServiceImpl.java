@@ -29,7 +29,7 @@ public class FilmServiceImpl implements FilmService {
     public List<FilmDto> searchFilmByTitle(String title) {
         String querySearch = "s=" + title;
         int page = 0;
-        String queryPage = "page=" + ++page;
+        String queryPage;
         FilmSearchDto filmSearch;
         List<FilmDto> films = new ArrayList<>();
 
