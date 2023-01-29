@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 public class FilmServiceImpl implements FilmService {
 
     private final RestClient restClient;
-    private static final int LIMIT = 2;
     private static final String TYPE_MOVIE = "movie";
+    private static final int LIMIT_DEFAULT = 2;
 
     @Autowired
     public FilmServiceImpl(RestClient restClient) {
@@ -28,21 +28,22 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public List<FilmDto> searchFilmByTitle(String title) {
         String querySearch = "s=" + title;
-        int page = 1;
-        FilmSearchDto filmSearch = restClient
-                .query(querySearch)
-                .get(FilmSearchDto.class);
-
+        int page = 0;
+        String queryPage = "page=" + ++page;
+        FilmSearchDto filmSearch;
         List<FilmDto> films = new ArrayList<>();
 
-        while (filmSearch.succeed() && page < LIMIT) {
-            films.addAll(filmSearch.getFilms().stream().filter((f -> f.getType().equals(TYPE_MOVIE))).collect(Collectors.toList()));
-            String queryPage = "page=" + ++page;
+        do {
+            queryPage = "page=" + ++page;
             filmSearch = restClient
                     .query(querySearch)
                     .query(queryPage)
                     .get(FilmSearchDto.class);
-        }
+
+            if (filmSearch.succeed()) {
+                films.addAll(filmSearch.getFilms().stream().filter((f -> f.getType().equals(TYPE_MOVIE))).collect(Collectors.toList()));
+            }
+        } while (page <= LIMIT_DEFAULT);
 
         return films;
     }

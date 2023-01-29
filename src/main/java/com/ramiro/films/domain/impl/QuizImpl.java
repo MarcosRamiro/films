@@ -5,6 +5,7 @@ import com.ramiro.films.domain.Quiz;
 import com.ramiro.films.dto.MoveFeedbackResponseDto;
 import com.ramiro.films.dto.MoveRequestDto;
 import com.ramiro.films.handler.exceptions.MatchNotFoundException;
+import com.ramiro.films.handler.exceptions.MoveNotFoundException;
 import com.ramiro.films.model.Film;
 import com.ramiro.films.model.Match;
 import com.ramiro.films.model.Move;
@@ -15,7 +16,6 @@ import com.ramiro.films.repository.MoveRepository;
 import com.ramiro.films.type.FilmOptionEnum;
 import com.ramiro.films.type.StatusMatchEnum;
 import com.ramiro.films.type.StatusMoveEnum;
-import com.ramiro.films.handler.exceptions.MoveNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -62,9 +62,6 @@ public class QuizImpl implements Quiz {
         Match match = getMatch(user);
         log.info("Quantidade de jogadas : " + match.getMoves().size());
 
-        if (match.getMoves().size() == 0)
-            return firstMove(match);
-
         Optional<Move> movePending = match.getMoves().stream().filter(m -> m.getStatus().equals(StatusMoveEnum.PENDING)).findFirst();
         if (movePending.isPresent())
             return movePending.get();
@@ -78,7 +75,9 @@ public class QuizImpl implements Quiz {
             moveOptionalFinal = generateMove(match, pageFilms);
         }
 
-        return moveRepository.save(moveOptionalFinal.get());
+        Move moveFinal = moveOptionalFinal.get();
+        moveRepository.save(moveFinal);
+        return moveFinal;
     }
 
     private Optional<Move> generateMove(Match match, List<Film> pageFilms) {
@@ -158,18 +157,8 @@ public class QuizImpl implements Quiz {
         return new MoveFeedbackResponseDto(message);
     }
 
-    private Move firstMove(Match match) {
-        List<Film> films = filmDataBase.getTwoFilms();
-        Film film1 = films.remove(0);
-        Film film2 = films.remove(0);
-        Move move = new Move(match, film1, film2);
-        moveRepository.save(move);
-        return move;
-    }
-
     private List<Film> getAllFilms() {
         return filmRepository.findAll();
-
     }
 
 }

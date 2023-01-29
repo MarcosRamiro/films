@@ -20,7 +20,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -32,8 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -67,7 +65,7 @@ public class QuizImplTest {
         Optional<Match> dummyMatchPresent = getDummyOptionalMatch();
 
         when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(dummyMatchPresent);
-        quiz.finalizeMatch(getUserDummy());
+        quiz.finalizeMatch(Mockito.mock(User.class));
 
         verify(matchRepository, times(1)).findTop1ByUserAndStatus(any(), any());
         verify(matchRepository, times(1)).save(dummyMatchPresent.get());
@@ -120,9 +118,9 @@ public class QuizImplTest {
 
         MoveFeedbackResponseDto moveFeedbackResponseDto = quiz.sendMove(mock(User.class), moveRequestDto);
 
-        assertEquals(cenarioAcertou?
+        assertEquals(cenarioAcertou ?
                         String.format("PARABÉNS!!!! Voce acertou. O Filme %s teve uma avaliação de %s, que é superior do que o outro filme.", film, notaVencedor)
-                : "ERROU! Você não acertou, mas não fique triste você ainda tem 2 jogadas.",
+                        : "ERROU! Você não acertou, mas não fique triste você ainda tem 2 jogadas.",
                 moveFeedbackResponseDto.getResult());
 
     }
@@ -164,16 +162,16 @@ public class QuizImplTest {
         moveFeedbackResponseDto = quiz.sendMove(mock(User.class), moveRequestDtoFilmA);
 
         assertEquals("GAME OVER! Compare seu resultado com os outros competidores.", moveFeedbackResponseDto.getResult());
-        assertEquals(match.getStatus(),StatusMatchEnum.CLOSED);
+        assertEquals(match.getStatus(), StatusMatchEnum.CLOSED);
         verify(matchRepository, times(1)).save(match);
         verify(moveRepository, times(4)).save(any());
 
     }
 
     @Test
-    public void deveCriarUmaNovaPartida(){
+    public void deveCriarUmaNovaPartida() {
 
-        when(matchRepository.findTop1ByUserAndStatus(any(),any())).thenReturn(Optional.empty());
+        when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(Optional.empty());
         Match matchResultado = quiz.newMatch(Mockito.mock(User.class));
 
         verify(matchRepository, times(1)).save(any());
@@ -181,10 +179,10 @@ public class QuizImplTest {
     }
 
     @Test
-    public void naoDeveCriarPartidaDuplicada(){
+    public void naoDeveCriarPartidaDuplicada() {
 
         Match match = getMatchComMovePendente();
-        when(matchRepository.findTop1ByUserAndStatus(any(),any())).thenReturn(Optional.of(match));
+        when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(Optional.of(match));
 
         Match matchResultado = quiz.newMatch(Mockito.mock(User.class));
 
@@ -194,36 +192,11 @@ public class QuizImplTest {
     }
 
     @Test
-    public void deveGerarNovaJogadaQuandoPrimeiraJogada(){
-
-        Match match = getDummyOptionalMatch().get();
-        Film filmA = new Film();
-        filmA.setImdbRating("1.0");
-        Film filmB = new Film();
-        filmB.setImdbRating("2.0");
-        List<Film> films = new ArrayList<>();
-        films.add(filmA);
-        films.add(filmB);
-
-        when(matchRepository.findTop1ByUserAndStatus(any(),any())).thenReturn(Optional.of(match));
-        when(filmDataBase.getTwoFilms()).thenReturn(films);
-
-        Move moveResultado = quiz.newMove(Mockito.mock(User.class));
-
-        assertEquals(filmA.getImdbRating(), moveResultado.getFilmA().getImdbRating());
-        assertEquals(filmB.getImdbRating(), moveResultado.getFilmB().getImdbRating());
-        assertEquals(StatusMoveEnum.PENDING, moveResultado.getStatus());
-        verify(filmDataBase, times(1)).getTwoFilms();
-        verify(moveRepository, times(1)).save(moveResultado);
-
-    }
-
-    @Test
-    public void naoDevePermitirGerarMaisDeUmaJogadaPendente(){
+    public void naoDevePermitirGerarMaisDeUmaJogadaPendente() {
 
         Match match = getMatchComMovePendente();
 
-        when(matchRepository.findTop1ByUserAndStatus(any(),any())).thenReturn(Optional.of(match));
+        when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(Optional.of(match));
 
         Move moveResultado = quiz.newMove(Mockito.mock(User.class));
 
@@ -231,7 +204,118 @@ public class QuizImplTest {
 
     }
 
-    private Match getMatchComMovePendente(){
+    @Test
+    public void deveGerarParDeFilmesCorretamenteNaPrimeiraJogada() {
+
+        Match matchSemJogada = getDummyOptionalMatch().get();
+        List<Film> filmsDummy = getAllFilmsDummy();
+
+        when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(Optional.of(matchSemJogada));
+        when(filmRepository.findAll()).thenReturn(filmsDummy);
+
+        Move moveResultado = quiz.newMove(Mockito.mock(User.class));
+
+        assertTrue(filmsDummy.stream().anyMatch(film -> film.equals(moveResultado.getFilmA())));
+        assertTrue(filmsDummy.stream().anyMatch(film -> film.equals(moveResultado.getFilmB())));
+        verify(filmRepository, times(1)).findAll();
+        verify(filmDataBase, times(0)).uploadFilms();
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({"2,2,0", "3,4,1"})
+    public void deveGerarParDeFilmesNaoRepetidos(int chamadasNewMove, int chamadasGetlAllFilms, int chamadasUploadFilms) {
+
+        Match matchSemJogada = getDummyOptionalMatch().get();
+        List<Film> filmsDummy = getAllFilmsDummy();
+        List<Film> filmsDummySegundaChamada = getAllFilmsDummy2();
+        filmsDummySegundaChamada.addAll(filmsDummy);
+        Move move = new Move(matchSemJogada, null, null);
+        move.setId(1L);
+        filmsDummy.stream().limit(2).forEach(
+                film -> {
+                    if (move.getFilmA() == null)
+                        move.setFilmA(film);
+                    else
+                        move.setFilmB(film);
+                }
+        );
+        move.setStatus(StatusMoveEnum.OK);
+        List<Move> jogadas = new ArrayList<>();
+        jogadas.add(move);
+        matchSemJogada.setMoves(jogadas);
+
+        when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(Optional.of(matchSemJogada));
+        when(filmRepository.findAll()).thenReturn(filmsDummy);
+
+
+        Move moveResultado;
+        long id = 0L;
+        for (int i = 1; i < chamadasNewMove; i++) {
+            moveResultado = quiz.newMove(Mockito.mock(User.class));
+            moveResultado.setStatus(StatusMoveEnum.OK);
+            id = i + 1;
+            moveResultado.setId(id);
+            matchSemJogada.getMoves().add(moveResultado);
+        }
+
+        //reset(filmRepository);
+        when(filmRepository.findAll()).thenReturn(filmsDummy, filmsDummySegundaChamada);
+        moveResultado = quiz.newMove(Mockito.mock(User.class));
+        id++;
+        moveResultado.setId(id);
+        matchSemJogada.getMoves().add(moveResultado);
+
+        boolean resultatoEsperadoTrue = matchSemJogada.getMoves().stream()
+                .filter(moveOk -> matchSemJogada.getMoves().stream().filter(m -> m.getId() != moveOk.getId())
+                        .allMatch(
+                                movePending -> (movePending.getFilmA().getId() == moveOk.getFilmA().getId()
+                                        && movePending.getFilmB().getId() == moveOk.getFilmB().getId()
+                                )
+                                        ||
+                                        (
+                                                movePending.getFilmA().getId() == moveOk.getFilmB().getId()
+                                                        && movePending.getFilmB().getId() == moveOk.getFilmA().getId()
+                                        )
+                        )).findFirst().isEmpty();
+
+        assertTrue(resultatoEsperadoTrue);
+
+        matchSemJogada.getMoves().stream().forEach(m -> System.out.println(
+                m.getStatus() + " -> move.getFilmA(): " + m.getFilmA().getId() + " | " + "move.getFilmB(): " + m.getFilmB().getId()
+        ));
+
+        verify(filmRepository, times(chamadasGetlAllFilms)).findAll();
+        verify(filmDataBase, times(chamadasUploadFilms)).uploadFilms();
+    }
+
+    private List<Film> getAllFilmsDummy() {
+        List<Film> films = new ArrayList<>();
+        Film film = new Film("A dama e o vagabundo", "2000", "2000", "Arthur Silva"
+                , "Alan Silva, Rodrigo alberto", "9.00", "1");
+        film.setId(Long.valueOf(film.getImdbID()));
+        films.add(film);
+        film = new Film("A viagem de barco", "2000", "2000", "Arthur Silva"
+                , "Alan Silva, Rodrigo alberto", "6.00", "2");
+        film.setId(Long.valueOf(film.getImdbID()));
+        films.add(film);
+        film = new Film("o mar azul", "2000", "2000", "Arthur Silva"
+                , "Alan Silva, Rodrigo alberto", "8.00", "3");
+        film.setId(Long.valueOf(film.getImdbID()));
+        films.add(film);
+        return films;
+    }
+
+    private List<Film> getAllFilmsDummy2() {
+        List<Film> films = new ArrayList<>();
+        Film film = new Film("Na estrada", "2000", "2000", "Arthur Silva"
+                , "Alan Silva, Rodrigo alberto", "9.00", "4");
+        film.setId(Long.valueOf(film.getImdbID()));
+        films.add(film);
+        return films;
+    }
+
+    private Match getMatchComMovePendente() {
         Optional<Match> dummyMatchPresent = getDummyOptionalMatch();
         Match match = dummyMatchPresent.get();
         List<Move> moves = new ArrayList<>();
@@ -244,7 +328,7 @@ public class QuizImplTest {
         return match;
     }
 
-    private Move getMovePendente(){
+    private Move getMovePendente() {
         Film filmA = new Film();
         Film filmB = new Film();
         Move move = new Move(null, filmA, filmB);
@@ -255,10 +339,5 @@ public class QuizImplTest {
     private Optional<Match> getDummyOptionalMatch() {
         return Optional.of(new Match(Mockito.mock(User.class), new ArrayList<>()));
     }
-
-    private User getUserDummy() {
-        return new User();
-    }
-
 
 }

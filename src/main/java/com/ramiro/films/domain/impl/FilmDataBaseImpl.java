@@ -34,10 +34,6 @@ public class FilmDataBaseImpl implements FilmDataBase {
         return this.filmRepository.findAll();
     }
 
-    public List<Film> getTwoFilms() {
-        return this.filmRepository.findTop2ByOrderByTitleAsc();
-    }
-
     @PostConstruct
     public void uploadInitialFilms() {
         uploadFilms();

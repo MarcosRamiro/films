@@ -7,7 +7,7 @@ import com.ramiro.films.repository.LoginRepository;
 import com.ramiro.films.repository.UserRepository;
 import com.ramiro.films.service.AuthenticationService;
 import com.ramiro.films.type.StatusLoginEnum;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -32,8 +32,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return user;
         }
 
-        log.info("Invalided credentials");
-        throw new AuthenticationCredentialsNotFoundException("invalided username/password");
+        log.info("invalid credentials");
+        throw new AuthenticationCredentialsNotFoundException("invalid username/password");
     }
 
     private boolean isUserValid(User user, CredentialsRequest credentials) {
@@ -48,7 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (userOptional.isPresent())
             return userOptional.get();
 
-        log.info("user not found");
+        log.info(String.format("user not found: %s.", username));
         throw new AuthenticationCredentialsNotFoundException("invalide username");
 
     }
