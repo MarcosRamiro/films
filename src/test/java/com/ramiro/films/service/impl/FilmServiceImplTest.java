@@ -3,12 +3,10 @@ package com.ramiro.films.service.impl;
 import com.ramiro.films.dto.FilmDto;
 import com.ramiro.films.dto.FilmSearchDto;
 import com.ramiro.films.service.RestClient;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -26,11 +24,6 @@ public class FilmServiceImplTest {
 
     @Mock
     RestClient restClient;
-
-    @Before("init")
-    public void init() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void devePesquisarFilmPorId() {

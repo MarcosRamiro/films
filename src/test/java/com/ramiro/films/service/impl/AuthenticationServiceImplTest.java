@@ -1,8 +1,6 @@
 package com.ramiro.films.service.impl;
 
 import com.ramiro.films.dto.CredentialsRequest;
-import com.ramiro.films.dto.MoveRequestDto;
-import com.ramiro.films.handler.exceptions.MoveNotFoundException;
 import com.ramiro.films.model.Login;
 import com.ramiro.films.model.User;
 import com.ramiro.films.repository.LoginRepository;
@@ -12,14 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,13 +32,8 @@ public class AuthenticationServiceImplTest {
     @Mock
     LoginRepository loginRepository;
 
-    @Before("init")
-    public void init() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
-    public void devePesquisarUsuarioPeloUsername(){
+    public void devePesquisarUsuarioPeloUsername() {
 
         User userMock = mock(User.class);
         Optional<User> userOptional = Optional.of(userMock);
@@ -54,7 +47,7 @@ public class AuthenticationServiceImplTest {
     }
 
     @Test
-    public void deveGerarErroQuandoNaoLocalizarUsuarioNoRepo(){
+    public void deveGerarErroQuandoNaoLocalizarUsuarioNoRepo() {
 
         when(userRepository.findTop1ByUsername(any())).thenReturn(Optional.empty());
 
@@ -67,7 +60,7 @@ public class AuthenticationServiceImplTest {
     }
 
     @Test
-    public void deveValidarCredenciaisCorretas(){
+    public void deveValidarCredenciaisCorretas() {
 
         CredentialsRequest credentials = new CredentialsRequest();
         credentials.setUsername("maria");
@@ -85,7 +78,7 @@ public class AuthenticationServiceImplTest {
     }
 
     @Test
-    public void deveGerarErroQuandoCredenciaisInvalidas(){
+    public void deveGerarErroQuandoCredenciaisInvalidas() {
 
         CredentialsRequest credentials = new CredentialsRequest();
         credentials.setUsername("maria");
@@ -105,7 +98,7 @@ public class AuthenticationServiceImplTest {
     }
 
     @Test
-    public void deveLocalizarLoginAbertoQuandoUsuarioJaLogado(){
+    public void deveLocalizarLoginAbertoQuandoUsuarioJaLogado() {
 
         Login loginMock = mock(Login.class);
         Optional<Login> loginOptional = Optional.of(loginMock);
@@ -114,11 +107,11 @@ public class AuthenticationServiceImplTest {
         Login loginResultado = authenticationServiceImpl.findLogin(mock(User.class));
 
         assertEquals(loginMock, loginResultado);
-        verify(loginRepository, times(1)).findTop1ByUserAndStatus(any(),any());
+        verify(loginRepository, times(1)).findTop1ByUserAndStatus(any(), any());
     }
 
     @Test
-    public void deveGerarErroQuandoNaoLocalizarLogin(){
+    public void deveGerarErroQuandoNaoLocalizarLogin() {
 
         when(loginRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(Optional.empty());
 

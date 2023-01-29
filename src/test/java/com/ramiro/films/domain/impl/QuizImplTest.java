@@ -54,11 +54,6 @@ public class QuizImplTest {
     @Mock
     private MoveRepository moveRepository;
 
-    @Before("init")
-    public void init() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     public void deveFinalizarPartida() {
 

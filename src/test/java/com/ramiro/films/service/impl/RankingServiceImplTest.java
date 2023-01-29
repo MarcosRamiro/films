@@ -6,12 +6,10 @@ import com.ramiro.films.model.Move;
 import com.ramiro.films.model.User;
 import com.ramiro.films.repository.MatchRepository;
 import com.ramiro.films.type.StatusMoveEnum;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -29,11 +27,6 @@ public class RankingServiceImplTest {
 
     @Mock
     MatchRepository matchRepository;
-
-    @Before("init")
-    public void init() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void deveCalcularRanking() {

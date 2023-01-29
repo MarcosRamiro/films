@@ -35,11 +35,6 @@ public class FilmDataBaseImplTest {
     @Mock
     FilmRepository filmRepository;
 
-    @Before("init")
-    public void init() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     @Order(1)
     public void deveAtualizarListaDeFilmes() {

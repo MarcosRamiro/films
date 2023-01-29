@@ -21,7 +21,7 @@ import java.util.Date;
 @Component
 public class UserAuthenticationProvider {
 
-    @Value("${security.jwt.token.secret-key:secret-key}")
+    @Value("${security.jwt.token.secret-key}")
     private String secretKey;
 
     private final AuthenticationService authenticationService;
@@ -66,7 +66,6 @@ public class UserAuthenticationProvider {
         return new UsernamePasswordAuthenticationToken(UserDto.of(user), null, Collections.emptyList());
     }
 
-
     public Authentication validadeCredentials(CredentialsRequest credentials) {
         User user = authenticationService.validateCredentials(credentials);
         return new UsernamePasswordAuthenticationToken(UserDto.of(user), null, Collections.emptyList());
@@ -75,6 +74,5 @@ public class UserAuthenticationProvider {
     private boolean isTokenActive(Login login, String token) {
         return login.getToken().equals(token);
     }
-
 
 }
