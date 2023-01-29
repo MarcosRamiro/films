@@ -15,6 +15,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<jacoco.version>0.8.6</jacoco.version>
+		<sonar.coverage.exclusions>src/**/model/**,src/**/dto/**</sonar.coverage.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>

@@ -2,9 +2,7 @@ package com.ramiro.films.model;
 
 import com.ramiro.films.dto.FilmDto;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -31,7 +29,7 @@ public class Film {
     @Column(name = "director")
     private String director;
 
-     @Column(name = "actors")
+    @Column(name = "actors")
     private String actors;
 
     @Column(name = "imdbRating")
