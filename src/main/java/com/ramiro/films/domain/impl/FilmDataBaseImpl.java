@@ -5,7 +5,8 @@ import com.ramiro.films.dto.FilmDto;
 import com.ramiro.films.model.Film;
 import com.ramiro.films.repository.FilmRepository;
 import com.ramiro.films.service.FilmService;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -17,21 +18,18 @@ import java.util.Queue;
 import java.util.stream.Collectors;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class FilmDataBaseImpl implements FilmDataBase {
 
     private final FilmService filmService;
     private final FilmRepository filmRepository;
 
+    @Getter
     private static Queue<String> WORDS_TO_SEARCH_FILMS = new LinkedList<>();
 
     static {
         WORDS_TO_SEARCH_FILMS.addAll(Arrays.asList("paz", "war", "love", "sex", "york", "amor", "guerra"));
-    }
-
-    public List<Film> getAllFilms() {
-        return this.filmRepository.findAll();
     }
 
     @PostConstruct
