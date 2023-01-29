@@ -16,7 +16,6 @@ public class QuizController {
 
     private final Quiz quiz;
 
-
     @PostMapping("/newMatch")
     public MatchResponseDto newMatch(@AuthenticationPrincipal UserDto userDto) {
         return new MatchResponseDto(quiz.newMatch(userDto.getUser()).getId());

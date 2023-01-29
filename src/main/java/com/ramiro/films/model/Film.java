@@ -118,15 +118,9 @@ public class Film {
         this.imdbId = imdbID;
     }
 
-    @Override
-    public String toString() {
-        return "FilmDao [id=" + id + ", title=" + title + ", year=" + year + ", released=" + released + ", director="
-                + director + ", actors=" + actors + ", imdbRating=" + imdbRating + ", imdbID=" + imdbId + "]";
-    }
-
     public static Film of(FilmDto filmDto) {
 
-        Film film = new Film(
+        return new Film(
                 filmDto.getTitle(),
                 filmDto.getYear(),
                 filmDto.getReleased(),
@@ -135,8 +129,6 @@ public class Film {
                 filmDto.getImdbRating(),
                 filmDto.getImdbID()
         );
-
-        return film;
 
     }
 

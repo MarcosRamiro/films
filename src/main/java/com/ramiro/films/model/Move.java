@@ -81,9 +81,4 @@ public class Move {
         this.filmB = filmB;
     }
 
-    @Override
-    public String toString() {
-        return "Move [id=" + id + ", status=" + status + ", match=" + match + "]";
-    }
-
 }
