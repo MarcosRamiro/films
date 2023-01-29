@@ -16,25 +16,17 @@ import java.util.Map;
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(MoveNotFoundException.class)
-    public ResponseEntity<Object> handleMoveNotFoundException(
-            MoveNotFoundException ex, WebRequest request) {
+    @ExceptionHandler({MoveNotFoundException.class, MatchNotFoundException.class})
+    public ResponseEntity<Object> handleNotFoundException(
+            Exception ex, WebRequest request) {
 
-        return prepareNotFoundResponse(ex);
+        return prepareErrorResponse(ex);
     }
 
-    @ExceptionHandler(MatchNotFoundException.class)
-    public ResponseEntity<Object> handleMatchNotFoundException(
-            MatchNotFoundException ex, WebRequest request) {
-
-        return prepareNotFoundResponse(ex);
-    }
-
-    private ResponseEntity<Object> prepareNotFoundResponse(Exception ex) {
+    private ResponseEntity<Object> prepareErrorResponse(Exception ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());
-
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 

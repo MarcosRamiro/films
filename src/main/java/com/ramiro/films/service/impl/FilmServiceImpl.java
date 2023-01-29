@@ -28,13 +28,13 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public List<FilmDto> searchFilmByTitle(String title) {
         String querySearch = "s=" + title;
-        int page = 0;
+        int page = 1;
         String queryPage;
         FilmSearchDto filmSearch;
         List<FilmDto> films = new ArrayList<>();
 
         do {
-            queryPage = "page=" + ++page;
+            queryPage = "page=" + page;
             filmSearch = restClient
                     .query(querySearch)
                     .query(queryPage)
@@ -43,6 +43,7 @@ public class FilmServiceImpl implements FilmService {
             if (filmSearch.succeed()) {
                 films.addAll(filmSearch.getFilms().stream().filter((f -> f.getType().equals(TYPE_MOVIE))).collect(Collectors.toList()));
             }
+            page++;
         } while (page <= LIMIT_DEFAULT);
 
         return films;
