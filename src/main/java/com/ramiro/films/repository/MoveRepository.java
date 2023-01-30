@@ -1,7 +1,6 @@
 package com.ramiro.films.repository;
 
 import com.ramiro.films.model.Move;
-import com.ramiro.films.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
