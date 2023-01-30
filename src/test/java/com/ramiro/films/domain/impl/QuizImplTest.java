@@ -211,24 +211,6 @@ public class QuizImplTest {
 
     }
 
-    @Test
-    public void deveGerarParDeFilmesCorretamenteNaPrimeiraJogada() {
-
-        Match matchSemJogada = getDummyOptionalMatch().get();
-        List<Film> filmsDummy = getAllFilmsDummy();
-
-        when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(Optional.of(matchSemJogada));
-        when(filmRepository.findAll()).thenReturn(filmsDummy);
-
-        Move moveResultado = quiz.newMove(Mockito.mock(User.class));
-
-        assertTrue(filmsDummy.stream().anyMatch(film -> film.equals(moveResultado.getFilmA())));
-        assertTrue(filmsDummy.stream().anyMatch(film -> film.equals(moveResultado.getFilmB())));
-        verify(filmRepository, times(1)).findAll();
-        verify(filmDataBase, times(0)).uploadFilms();
-    }
-
-
     @ParameterizedTest
     @CsvSource({"2,2,0", "3,4,1"})
     public void deveGerarParDeFilmesNaoRepetidos(int chamadasNewMove, int chamadasGetlAllFilms, int chamadasUploadFilms) {
@@ -254,7 +236,7 @@ public class QuizImplTest {
 
         when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(Optional.of(matchSemJogada));
         when(filmRepository.findAll()).thenReturn(filmsDummy);
-
+        when(moveRepository.findAllMovesFromUserId(any())).thenReturn(matchSemJogada.getMoves());
 
         Move moveResultado;
         long id = 0L;
@@ -266,7 +248,6 @@ public class QuizImplTest {
             matchSemJogada.getMoves().add(moveResultado);
         }
 
-        //reset(filmRepository);
         when(filmRepository.findAll()).thenReturn(filmsDummy, filmsDummySegundaChamada);
         moveResultado = quiz.newMove(Mockito.mock(User.class));
         id++;

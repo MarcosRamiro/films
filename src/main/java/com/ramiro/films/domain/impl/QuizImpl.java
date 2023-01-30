@@ -66,12 +66,13 @@ public class QuizImpl implements Quiz {
             return movePending.get();
 
         List<Film> pageFilms = getAllFilms();
+        List<Move> movesFromUser = moveRepository.findAllMovesFromUserId(user.getId());
 
-        Optional<Move> moveOptionalFinal = generateMove(match, pageFilms);
+        Optional<Move> moveOptionalFinal = generateMove(match, movesFromUser, pageFilms);
         while (moveOptionalFinal.isEmpty()) {
             filmDataBase.uploadFilms();
             pageFilms = getAllFilms();
-            moveOptionalFinal = generateMove(match, pageFilms);
+            moveOptionalFinal = generateMove(match, movesFromUser, pageFilms);
         }
 
         Move moveFinal = moveOptionalFinal.get();
@@ -79,7 +80,7 @@ public class QuizImpl implements Quiz {
         return moveFinal;
     }
 
-    private Optional<Move> generateMove(Match match, List<Film> pageFilms) {
+    private Optional<Move> generateMove(Match match, List<Move> moves, List<Film> pageFilms) {
 
         return pageFilms.stream()
                 .map(film -> new Move(match, film, null))
@@ -87,7 +88,7 @@ public class QuizImpl implements Quiz {
                         pageFilms.stream()
                                 .filter(film -> film.getId() != move.getFilmA().getId())
                                 .map(film -> new Move(move.getMatch(), move.getFilmA(), film)))
-                .filter(move -> match.getMoves().stream().noneMatch(m ->
+                .filter(move -> moves.stream().noneMatch(m ->
                         (m.getFilmA().getId() == move.getFilmA().getId() && m.getFilmB().getId() == move.getFilmB().getId())
                                 ||
                                 (m.getFilmA().getId() == move.getFilmB().getId() && m.getFilmB().getId() == move.getFilmA().getId())))
