@@ -65,14 +65,14 @@ public class QuizImpl implements Quiz {
         if (movePending.isPresent())
             return movePending.get();
 
-        List<Film> pageFilms = getAllFilms();
+        List<Film> films = getAllFilms();
         List<Move> movesFromUser = moveRepository.findAllMovesFromUserId(user.getId());
 
-        Optional<Move> moveOptionalFinal = generateMove(match, movesFromUser, pageFilms);
+        Optional<Move> moveOptionalFinal = generateMove(match, movesFromUser, films);
         while (moveOptionalFinal.isEmpty()) {
             filmDataBase.uploadFilms();
-            pageFilms = getAllFilms();
-            moveOptionalFinal = generateMove(match, movesFromUser, pageFilms);
+            films = getAllFilms();
+            moveOptionalFinal = generateMove(match, movesFromUser, films);
         }
 
         Move moveFinal = moveOptionalFinal.get();
@@ -80,12 +80,12 @@ public class QuizImpl implements Quiz {
         return moveFinal;
     }
 
-    private Optional<Move> generateMove(Match match, List<Move> moves, List<Film> pageFilms) {
+    private Optional<Move> generateMove(Match match, List<Move> moves, List<Film> films) {
 
-        return pageFilms.stream()
+        return films.stream()
                 .map(film -> new Move(match, film, null))
                 .flatMap(move ->
-                        pageFilms.stream()
+                        films.stream()
                                 .filter(film -> film.getId() != move.getFilmA().getId())
                                 .map(film -> new Move(move.getMatch(), move.getFilmA(), film)))
                 .filter(move -> moves.stream().noneMatch(m ->
@@ -97,7 +97,7 @@ public class QuizImpl implements Quiz {
 
     private Match getMatch(User user) {
         Optional<Match> matchOptional = getMatchOptional(user);
-        if (!matchOptional.isPresent())
+        if (matchOptional.isEmpty())
             throw new MatchNotFoundException("Não há uma partida aberta. Inicie uma nova partida em 'Iniciar partida'.");
         return matchOptional.get();
     }
@@ -112,7 +112,7 @@ public class QuizImpl implements Quiz {
         Match match = getMatch(user);
 
         Optional<Move> moveOptionalPending = match.getMoves().stream().filter(m -> m.getStatus().equals(StatusMoveEnum.PENDING)).findFirst();
-        if (!moveOptionalPending.isPresent())
+        if (moveOptionalPending.isEmpty())
             throw new MoveNotFoundException("Não há jogada pendente. Vá para 'Próxima jogada'.");
 
         Move move = moveOptionalPending.get();
