@@ -22,7 +22,7 @@ http://localhost:8080/h2-console/
 
 **Usuários**
 
-Há dois usuários pré-cadastrado no Sistema, ambos estão no arquivo data.sql.
+Há dois usuários pré-cadastrados no Sistema, ambos estão no arquivo data.sql.
 - usuário: MARIA senha: 123456
 - usuário: JOSE senha: 654321
 
