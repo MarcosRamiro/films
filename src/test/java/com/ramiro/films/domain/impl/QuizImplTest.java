@@ -127,7 +127,7 @@ public class QuizImplTest {
 
         assertEquals(cenarioAcertou ?
                         String.format("PARABÉNS!!!! Voce acertou. O Filme %s teve uma avaliação de %s, que é superior do que o outro filme.", film, notaVencedor)
-                        : "ERROU! Você não acertou, mas não fique triste você ainda tem 2 jogadas.",
+                        : "ERROU! Você não acertou, mas não fique triste você ainda tem 2 jogada(s).",
                 moveFeedbackResponseDto.getResult());
 
     }
