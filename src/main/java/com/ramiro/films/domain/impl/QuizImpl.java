@@ -35,10 +35,9 @@ public class QuizImpl implements Quiz {
     private final MatchRepository matchRepository;
     private final MoveRepository moveRepository;
 
-    private static int SIZE_QUERY_FILM = 10;
     private static int LIMIT_ERRORS = 3;
     public static String POSITIVE = "PARABÉNS!!!! Voce acertou. O Filme %s teve uma avaliação de %s, que é superior do que o outro filme.";
-    public static String NEGATIVE = "ERROU! Você não acertou, mas não fique triste você ainda tem %d jogadas.";
+    public static String NEGATIVE = "ERROU! Você não acertou, mas não fique triste você ainda tem %d jogada(s).";
     public static String GAME_OVER = "GAME OVER! Compare seu resultado com os outros competidores.";
 
     @Override
@@ -154,7 +153,7 @@ public class QuizImpl implements Quiz {
 
         if (move.getStatus().equals(StatusMoveEnum.OK))
             message = String.format(POSITIVE, moveRequestDto.getFilmeComMaiorAvaliacao().toString(), film.getImdbRating());
-        else if (move.getStatus().equals(StatusMoveEnum.NOK) && !(match.getTotalErro() == LIMIT_ERRORS))
+        else if (move.getStatus().equals(StatusMoveEnum.NOK) && match.getTotalErro() != LIMIT_ERRORS)
             message = String.format(NEGATIVE, 3 - match.getTotalErro());
         else
             message = GAME_OVER;

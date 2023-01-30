@@ -28,8 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/login", "/h2-console/**",
-                                    "/v3/api-docs/**", "/swagger-ui**",
-                                    "/swagger-ui/**","/swagger-resources/**").permitAll()
+                                    "/v3/api-docs/**","/swagger-ui/**",
+                                    "/swagger-resources/**").permitAll()
                 .anyRequest().authenticated();
 
     }
