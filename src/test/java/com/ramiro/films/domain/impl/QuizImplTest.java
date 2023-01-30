@@ -53,15 +53,29 @@ public class QuizImplTest {
     private MoveRepository moveRepository;
 
     @Test
-    public void deveFinalizarPartida() {
+    public void deveFinalizarPartidaQuandoPresente() {
 
         Optional<Match> dummyMatchPresent = getDummyOptionalMatch();
-
         when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(dummyMatchPresent);
-        quiz.finalizeMatch(Mockito.mock(User.class));
 
+        quiz.finalizeMatchIfPresent(Mockito.mock(User.class));
+
+        assertEquals(StatusMatchEnum.CLOSED, dummyMatchPresent.get().getStatus());
         verify(matchRepository, times(1)).findTop1ByUserAndStatus(any(), any());
         verify(matchRepository, times(1)).save(dummyMatchPresent.get());
+
+    }
+
+    @Test
+    public void deveTratarCenarioOndeNaoHaMathAberto() {
+
+        Optional<Match> matchOptionalEmpty = Optional.empty();
+        when(matchRepository.findTop1ByUserAndStatus(any(), any())).thenReturn(matchOptionalEmpty);
+
+        quiz.finalizeMatchIfPresent(Mockito.mock(User.class));
+
+        verify(matchRepository, times(1)).findTop1ByUserAndStatus(any(), any());
+        verify(matchRepository, times(0)).save(any());
 
     }
 

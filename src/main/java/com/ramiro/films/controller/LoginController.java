@@ -56,7 +56,7 @@ public class LoginController {
     @PostMapping("/logout")
     public ResponseEntity<Void> signOut(@Parameter(hidden = true) @AuthenticationPrincipal UserDto user) {
         loginService.logout(user);
-        quiz.finalizeMatch(user.getUser());
+        quiz.finalizeMatchIfPresent(user.getUser());
         SecurityContextHolder.clearContext();
         return ResponseEntity.status(200).build();
     }

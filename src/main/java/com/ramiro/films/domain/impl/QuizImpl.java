@@ -44,7 +44,7 @@ public class QuizImpl implements Quiz {
     @Override
     public Match newMatch(User user) {
 
-        Optional<Match> matchOptional = matchRepository.findTop1ByUserAndStatus(user, StatusMatchEnum.OPEN);
+        Optional<Match> matchOptional = getMatchOptional(user);
 
         if (matchOptional.isPresent())
             return matchOptional.get();
@@ -96,10 +96,14 @@ public class QuizImpl implements Quiz {
     }
 
     private Match getMatch(User user) {
-        Optional<Match> matchOptional = matchRepository.findTop1ByUserAndStatus(user, StatusMatchEnum.OPEN);
+        Optional<Match> matchOptional = getMatchOptional(user);
         if (!matchOptional.isPresent())
             throw new MatchNotFoundException("Não há uma partida aberta. Inicie uma nova partida em 'Iniciar partida'.");
         return matchOptional.get();
+    }
+
+    private Optional<Match> getMatchOptional(User user) {
+        return matchRepository.findTop1ByUserAndStatus(user, StatusMatchEnum.OPEN);
     }
 
     @Override
@@ -135,12 +139,13 @@ public class QuizImpl implements Quiz {
     }
 
     @Override
-    public void finalizeMatch(User user) {
+    public void finalizeMatchIfPresent(User user) {
 
-        Match match = getMatch(user);
-        match.setStatus(StatusMatchEnum.CLOSED);
-        matchRepository.save(match);
-
+        Optional<Match> matchOptional = getMatchOptional(user);
+        matchOptional.ifPresent(match -> {
+            match.setStatus(StatusMatchEnum.CLOSED);
+            matchRepository.save(match);
+        });
     }
 
     private MoveFeedbackResponseDto prepareResult(MoveRequestDto moveRequestDto, Match match, Move move) {
