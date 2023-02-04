@@ -36,22 +36,6 @@ public class QuizController {
         return new MatchResponseDto(quiz.newMatch(userDto.getUser()).getId());
     }
 
-
-    @Operation(summary = "nova jogada", description = "inicia uma nova jogada",
-            security = {@SecurityRequirement(name = "BearerJWT")})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Jogada criada com sucesso.",
-                    content = {@Content(schema = @Schema(implementation = MoveResponseDto.class),
-                            mediaType = "application/json")})
-    })
-    @PostMapping("/newMove")
-    public MoveResponseDto newMove(@Parameter(hidden = true) @AuthenticationPrincipal UserDto userDto) {
-        return MoveResponseDto.of(quiz.newMove(userDto.getUser()));
-
-    }
-
-
     @Operation(summary = "envia opção da jogada", description = "envia a jogada para validar o resultado.",
             security = {@SecurityRequirement(name = "BearerJWT")})
     @ApiResponses(value = {
