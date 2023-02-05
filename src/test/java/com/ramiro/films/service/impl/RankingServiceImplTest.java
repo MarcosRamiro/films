@@ -2,9 +2,9 @@ package com.ramiro.films.service.impl;
 
 import com.ramiro.films.dto.RankingResponseDto;
 import com.ramiro.films.model.Match;
-import com.ramiro.films.model.Move;
 import com.ramiro.films.model.User;
-import com.ramiro.films.repository.MatchRepository;
+import com.ramiro.films.newmove.adapter.repo.MatchRepository;
+import com.ramiro.films.newmove.entity.Move;
 import com.ramiro.films.type.StatusMoveEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

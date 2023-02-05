@@ -1,8 +1,10 @@
-package com.ramiro.films.controller;
+package com.ramiro.films.newmove.adapter;
 
-import com.ramiro.films.domain.Quiz;
 import com.ramiro.films.dto.MoveResponseDto;
 import com.ramiro.films.dto.UserDto;
+import com.ramiro.films.newmove.adapter.repo.MoveRepository;
+import com.ramiro.films.newmove.entity.Move;
+import com.ramiro.films.newmove.usecase.NewMoveUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class QuizNewMoveController {
 
-    private final Quiz quiz;
+    private final NewMoveUseCase useCase;
+    private final MoveRepository moveRepository;
 
     @Operation(
             summary = "nova jogada",
@@ -42,7 +45,9 @@ public class QuizNewMoveController {
     })
     @PostMapping("/newMove")
     public MoveResponseDto newMove(@Parameter(hidden = true) @AuthenticationPrincipal UserDto userDto) {
-        return MoveResponseDto.of(quiz.newMove(userDto.getUser()));
+        Move move = useCase.newMove(userDto.getUser());
+        moveRepository.save(move);
+        return MoveResponseDto.of(move);
 
     }
 

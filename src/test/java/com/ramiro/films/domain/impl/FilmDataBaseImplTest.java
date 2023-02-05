@@ -1,9 +1,9 @@
 package com.ramiro.films.domain.impl;
 
 import com.ramiro.films.dto.FilmDto;
-import com.ramiro.films.repository.FilmRepository;
-import com.ramiro.films.service.FilmService;
-import org.aspectj.lang.annotation.Before;
+import com.ramiro.films.newmove.adapter.UploadFilmsImpl;
+import com.ramiro.films.newmove.adapter.api.FilmResource;
+import com.ramiro.films.newmove.adapter.repo.FilmRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -27,10 +26,10 @@ import static org.mockito.Mockito.*;
 public class FilmDataBaseImplTest {
 
     @InjectMocks
-    private FilmDataBaseImpl filmDataBaseImpl;
+    private UploadFilmsImpl uploadFilms;
 
     @Mock
-    FilmService filmService;
+    FilmResource filmResource;
 
     @Mock
     FilmRepository filmRepository;
@@ -40,14 +39,14 @@ public class FilmDataBaseImplTest {
     public void deveAtualizarListaDeFilmes() {
 
         List<FilmDto> films = getFilmes();
-        when(filmService.searchFilmByTitle(anyString())).thenReturn(films);
-        when(filmService.getFilmById(anyString())).thenReturn(films.get(0));
+        when(filmResource.searchFilmByTitle(anyString())).thenReturn(films);
+        when(filmResource.getFilmById(anyString())).thenReturn(films.get(0));
         when(filmRepository.count()).thenReturn(1L);
 
-        filmDataBaseImpl.uploadInitialFilms();
+        uploadFilms.uploadInitialFilms();
 
-        verify(filmService, times(1)).searchFilmByTitle(anyString());
-        verify(filmService, times(1)).getFilmById(anyString());
+        verify(filmResource, times(1)).searchFilmByTitle(anyString());
+        verify(filmResource, times(1)).getFilmById(anyString());
         verify(filmRepository, times(1)).save(any());
         verify(filmRepository, times(1)).count();
 
@@ -66,22 +65,22 @@ public class FilmDataBaseImplTest {
     public void deveGerarErroQuandoAListaDePalavrasAcabar() {
 
         List<FilmDto> films = getFilmes();
-        int qtdePalavras = FilmDataBaseImpl.getWORDS_TO_SEARCH_FILMS().size();
-        when(filmService.searchFilmByTitle(anyString())).thenReturn(films);
-        when(filmService.getFilmById(anyString())).thenReturn(films.get(0));
+        int qtdePalavras = UploadFilmsImpl.getWORDS_TO_SEARCH_FILMS().size();
+        when(filmResource.searchFilmByTitle(anyString())).thenReturn(films);
+        when(filmResource.getFilmById(anyString())).thenReturn(films.get(0));
         when(filmRepository.count()).thenReturn(1L);
 
         for (int i = 0; i < qtdePalavras; i++) {
-            filmDataBaseImpl.uploadInitialFilms();
+            uploadFilms.uploadInitialFilms();
         }
 
         Exception exception = assertThrows(RuntimeException.class, () -> {
-            filmDataBaseImpl.uploadInitialFilms();
+            uploadFilms.uploadInitialFilms();
         });
 
         assertEquals("word list is empty", exception.getMessage());
-        verify(filmService, times(qtdePalavras)).searchFilmByTitle(anyString());
-        verify(filmService, times(qtdePalavras)).getFilmById(anyString());
+        verify(filmResource, times(qtdePalavras)).searchFilmByTitle(anyString());
+        verify(filmResource, times(qtdePalavras)).getFilmById(anyString());
         verify(filmRepository, times(qtdePalavras)).save(any());
         verify(filmRepository, times(qtdePalavras)).count();
     }

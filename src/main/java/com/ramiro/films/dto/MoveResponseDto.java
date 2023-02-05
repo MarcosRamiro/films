@@ -1,7 +1,7 @@
 package com.ramiro.films.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ramiro.films.model.Move;
+import com.ramiro.films.newmove.entity.Move;
 import lombok.Data;
 
 @Data

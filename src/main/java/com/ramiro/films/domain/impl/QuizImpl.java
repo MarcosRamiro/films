@@ -1,6 +1,5 @@
 package com.ramiro.films.domain.impl;
 
-import com.ramiro.films.domain.FilmDataBase;
 import com.ramiro.films.domain.Quiz;
 import com.ramiro.films.dto.MoveFeedbackResponseDto;
 import com.ramiro.films.dto.MoveRequestDto;
@@ -8,11 +7,11 @@ import com.ramiro.films.handler.exceptions.MatchNotFoundException;
 import com.ramiro.films.handler.exceptions.MoveNotFoundException;
 import com.ramiro.films.model.Film;
 import com.ramiro.films.model.Match;
-import com.ramiro.films.model.Move;
 import com.ramiro.films.model.User;
-import com.ramiro.films.repository.FilmRepository;
-import com.ramiro.films.repository.MatchRepository;
-import com.ramiro.films.repository.MoveRepository;
+import com.ramiro.films.newmove.adapter.repo.FilmRepository;
+import com.ramiro.films.newmove.adapter.repo.MatchRepository;
+import com.ramiro.films.newmove.adapter.repo.MoveRepository;
+import com.ramiro.films.newmove.entity.Move;
 import com.ramiro.films.type.FilmOptionEnum;
 import com.ramiro.films.type.StatusMatchEnum;
 import com.ramiro.films.type.StatusMoveEnum;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -30,8 +28,6 @@ import java.util.Optional;
 @Slf4j
 public class QuizImpl implements Quiz {
 
-    private final FilmDataBase filmDataBase;
-    private final FilmRepository filmRepository;
     private final MatchRepository matchRepository;
     private final MoveRepository moveRepository;
 
@@ -55,45 +51,6 @@ public class QuizImpl implements Quiz {
 
     }
 
-    @Override
-    public Move newMove(User user) {
-
-        Match match = getMatch(user);
-        log.info("Quantidade de jogadas : " + match.getMoves().size());
-
-        Optional<Move> movePending = match.getMoves().stream().filter(m -> m.getStatus().equals(StatusMoveEnum.PENDING)).findFirst();
-        if (movePending.isPresent())
-            return movePending.get();
-
-        List<Film> films = getAllFilms();
-        List<Move> movesFromUser = moveRepository.findAllMovesFromUserId(user.getId());
-
-        Optional<Move> moveOptionalFinal = generateMove(match, movesFromUser, films);
-        while (moveOptionalFinal.isEmpty()) {
-            filmDataBase.uploadFilms();
-            films = getAllFilms();
-            moveOptionalFinal = generateMove(match, movesFromUser, films);
-        }
-
-        Move moveFinal = moveOptionalFinal.get();
-        moveRepository.save(moveFinal);
-        return moveFinal;
-    }
-
-    private Optional<Move> generateMove(Match match, List<Move> moves, List<Film> films) {
-
-        return films.stream()
-                .map(film -> new Move(match, film, null))
-                .flatMap(move ->
-                        films.stream()
-                                .filter(film -> film.getId() != move.getFilmA().getId())
-                                .map(film -> new Move(move.getMatch(), move.getFilmA(), film)))
-                .filter(move -> moves.stream().noneMatch(m ->
-                        (m.getFilmA().getId() == move.getFilmA().getId() && m.getFilmB().getId() == move.getFilmB().getId())
-                                ||
-                                (m.getFilmA().getId() == move.getFilmB().getId() && m.getFilmB().getId() == move.getFilmA().getId())))
-                .findFirst();
-    }
 
     private Match getMatch(User user) {
         Optional<Match> matchOptional = getMatchOptional(user);
@@ -162,8 +119,5 @@ public class QuizImpl implements Quiz {
         return new MoveFeedbackResponseDto(message);
     }
 
-    private List<Film> getAllFilms() {
-        return filmRepository.findAll();
-    }
 
 }

@@ -2,6 +2,7 @@ package com.ramiro.films.service.impl;
 
 import com.ramiro.films.dto.FilmDto;
 import com.ramiro.films.dto.FilmSearchDto;
+import com.ramiro.films.newmove.adapter.api.FilmResourceImpl;
 import com.ramiro.films.service.RestClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,10 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class FilmServiceImplTest {
+public class FilmResourceImplTest {
 
     @InjectMocks
-    private FilmServiceImpl filmService;
+    private FilmResourceImpl filmResource;
 
     @Mock
     RestClient restClient;
@@ -35,7 +36,7 @@ public class FilmServiceImplTest {
         when(mockRestClientBuilder.get(any())).thenReturn(film);
         when(restClient.query(any())).thenReturn(mockRestClientBuilder);
 
-        FilmDto filmResultado = filmService.getFilmById("4");
+        FilmDto filmResultado = filmResource.getFilmById("4");
 
         assertEquals(film, filmResultado);
         verify(mockRestClientBuilder, times(1)).get(any());
@@ -72,7 +73,7 @@ public class FilmServiceImplTest {
         when(restClient.query(any())).thenReturn(mockRestClientBuilder);
         when(mockRestClientBuilder.query(any())).thenReturn(mockRestClientBuilder);
 
-        List<FilmDto> filmsResultado = filmService.searchFilmByTitle("xpto");
+        List<FilmDto> filmsResultado = filmResource.searchFilmByTitle("xpto");
 
         boolean deveSerTrue = filmsResultado.stream()
                 .allMatch(film -> film.getImdbID() == film1.getImdbID()

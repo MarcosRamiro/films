@@ -1,8 +1,7 @@
-package com.ramiro.films.service.impl;
+package com.ramiro.films.newmove.adapter.api;
 
 import com.ramiro.films.dto.FilmDto;
 import com.ramiro.films.dto.FilmSearchDto;
-import com.ramiro.films.service.FilmService;
 import com.ramiro.films.service.RestClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +13,14 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class FilmServiceImpl implements FilmService {
+public class FilmResourceImpl implements FilmResource {
 
     private final RestClient restClient;
     private static final String TYPE_MOVIE = "movie";
     private static final int LIMIT_DEFAULT = 2;
 
     @Autowired
-    public FilmServiceImpl(RestClient restClient) {
+    public FilmResourceImpl(RestClient restClient) {
         this.restClient = restClient;
     }
 

@@ -3,7 +3,7 @@ package com.ramiro.films.service.impl;
 import com.ramiro.films.dto.PositionResponseDto;
 import com.ramiro.films.dto.RankingResponseDto;
 import com.ramiro.films.model.Match;
-import com.ramiro.films.repository.MatchRepository;
+import com.ramiro.films.newmove.adapter.repo.MatchRepository;
 import com.ramiro.films.service.RankingService;
 import com.ramiro.films.type.StatusMoveEnum;
 import lombok.RequiredArgsConstructor;

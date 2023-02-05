@@ -1,10 +1,10 @@
-package com.ramiro.films.service;
+package com.ramiro.films.newmove.adapter.api;
 
 import com.ramiro.films.dto.FilmDto;
 
 import java.util.List;
 
-public interface FilmService {
+public interface FilmResource {
 
     List<FilmDto> searchFilmByTitle(String title);
 

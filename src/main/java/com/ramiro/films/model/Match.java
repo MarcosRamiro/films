@@ -1,5 +1,6 @@
 package com.ramiro.films.model;
 
+import com.ramiro.films.newmove.entity.Move;
 import com.ramiro.films.type.StatusMatchEnum;
 import lombok.Data;
 

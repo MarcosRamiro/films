@@ -1,10 +1,10 @@
-package com.ramiro.films.domain.impl;
+package com.ramiro.films.newmove.adapter;
 
-import com.ramiro.films.domain.FilmDataBase;
 import com.ramiro.films.dto.FilmDto;
 import com.ramiro.films.model.Film;
-import com.ramiro.films.repository.FilmRepository;
-import com.ramiro.films.service.FilmService;
+import com.ramiro.films.newmove.adapter.api.FilmResource;
+import com.ramiro.films.newmove.adapter.repo.FilmRepository;
+import com.ramiro.films.newmove.usecase.UploadFilms;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class FilmDataBaseImpl implements FilmDataBase {
+public class UploadFilmsImpl implements UploadFilms {
 
-    private final FilmService filmService;
+    private final FilmResource filmResource;
     private final FilmRepository filmRepository;
 
     @Getter
@@ -45,11 +45,11 @@ public class FilmDataBaseImpl implements FilmDataBase {
         if (word == null)
             throw new RuntimeException("word list is empty");
 
-        List<FilmDto> searchFilmByTitle = this.filmService.searchFilmByTitle(word);
+        List<FilmDto> searchFilmByTitle = this.filmResource.searchFilmByTitle(word);
         log.info("Films Found: " + searchFilmByTitle.size());
         List<FilmDto> listFilms =
                 searchFilmByTitle.stream()
-                        .map(f -> this.filmService.getFilmById(f.getImdbID()))
+                        .map(f -> this.filmResource.getFilmById(f.getImdbID()))
                         .filter(f -> !f.getImdbRating().equals("N/A"))
                         .collect(Collectors.toList());
         listFilms.stream().forEach(f -> filmRepository.save(Film.of(f)));
