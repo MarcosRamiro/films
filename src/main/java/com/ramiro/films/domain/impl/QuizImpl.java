@@ -8,7 +8,6 @@ import com.ramiro.films.handler.exceptions.MoveNotFoundException;
 import com.ramiro.films.model.Film;
 import com.ramiro.films.model.Match;
 import com.ramiro.films.model.User;
-import com.ramiro.films.newmove.adapter.repo.FilmRepository;
 import com.ramiro.films.newmove.adapter.repo.MatchRepository;
 import com.ramiro.films.newmove.adapter.repo.MoveRepository;
 import com.ramiro.films.newmove.entity.Move;

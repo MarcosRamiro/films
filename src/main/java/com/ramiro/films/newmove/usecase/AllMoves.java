@@ -8,4 +8,6 @@ import java.util.List;
 public interface AllMoves {
 
     List<Move> getAllMovesFromUser(User user);
+
+    void add(Move move);
 }

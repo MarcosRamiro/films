@@ -26,14 +26,14 @@ import java.util.Optional;
 public class NewMoveUseCaseImpl implements NewMoveUseCase {
 
     // IoC
-    private final MatchRepo matchRepo;
+    private final AllMatches allMatches;
     private final AllMoves allMoves;
     private final AllFilms allFilms;
     private final UploadFilms uploadFilms;
 
     @Inject
-    public NewMoveUseCaseImpl(MatchRepo matchRepo, AllMoves allMoves, AllFilms allFilms, UploadFilms uploadFilms) {
-        this.matchRepo = matchRepo;
+    public NewMoveUseCaseImpl(AllMatches allMatches, AllMoves allMoves, AllFilms allFilms, UploadFilms uploadFilms) {
+        this.allMatches = allMatches;
         this.allMoves = allMoves;
         this.allFilms = allFilms;
         this.uploadFilms = uploadFilms;
@@ -64,7 +64,10 @@ public class NewMoveUseCaseImpl implements NewMoveUseCase {
             moveOptionalFinal = generateMove(match, moves, films);
         }
 
-        return moveOptionalFinal.get();
+        Move move = moveOptionalFinal.get();
+        allMoves.add(move);
+
+        return move;
     }
 
     private Optional<Move> generateMove(Match match, List<Move> moves, List<Film> films) {
@@ -90,7 +93,7 @@ public class NewMoveUseCaseImpl implements NewMoveUseCase {
     }
 
     private Optional<Match> getMatchOptional(User user) {
-        return matchRepo.getMathOpenByUser(user);
+        return allMatches.getMathOpenByUser(user);
     }
 
     private List<Film> getAllFilms() {

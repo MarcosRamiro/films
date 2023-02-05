@@ -17,4 +17,9 @@ public interface MoveRepository extends AllMoves, JpaRepository<Move, Long> {
     default List<Move> getAllMovesFromUser(User user) {
         return this.findAllMovesFromUserId(user.getId());
     }
+
+    @Override
+    default void add(Move move){
+        this.save(move);
+    }
 }

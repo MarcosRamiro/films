@@ -2,7 +2,6 @@ package com.ramiro.films.newmove.adapter;
 
 import com.ramiro.films.dto.MoveResponseDto;
 import com.ramiro.films.dto.UserDto;
-import com.ramiro.films.newmove.adapter.repo.MoveRepository;
 import com.ramiro.films.newmove.entity.Move;
 import com.ramiro.films.newmove.usecase.NewMoveUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class QuizNewMoveController {
 
     private final NewMoveUseCase useCase;
-    private final MoveRepository moveRepository;
 
     @Operation(
             summary = "nova jogada",
@@ -34,21 +32,19 @@ public class QuizNewMoveController {
             })
     @ApiResponses(
             value = {
-                @ApiResponse(
-                        responseCode = "200",
-                        description = "Jogada criada com sucesso.",
-                        content = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Jogada criada com sucesso.",
+                            content = {
                                     @Content(
                                             schema = @Schema(implementation = MoveResponseDto.class),
                                             mediaType = "application/json")
-                        })
-    })
+                            })
+            })
     @PostMapping("/newMove")
     public MoveResponseDto newMove(@Parameter(hidden = true) @AuthenticationPrincipal UserDto userDto) {
         Move move = useCase.newMove(userDto.getUser());
-        moveRepository.save(move);
         return MoveResponseDto.of(move);
-
     }
 
 }

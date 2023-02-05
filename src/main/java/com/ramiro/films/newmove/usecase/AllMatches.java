@@ -5,7 +5,7 @@ import com.ramiro.films.model.User;
 
 import java.util.Optional;
 
-public interface MatchRepo {
+public interface AllMatches {
 
     Optional<Match> getMathOpenByUser(User user);
 
