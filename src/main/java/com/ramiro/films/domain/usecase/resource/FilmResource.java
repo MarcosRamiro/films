@@ -1,4 +1,4 @@
-package com.ramiro.films.newmove.adapter.api;
+package com.ramiro.films.domain.usecase.resource;
 
 import com.ramiro.films.domain.entity.dto.FilmDto;
 

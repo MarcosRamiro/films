@@ -1,29 +1,30 @@
-package com.ramiro.films.newmove.adapter;
+package com.ramiro.films.domain.usecase.impl;
 
 import com.ramiro.films.domain.entity.dto.FilmDto;
 import com.ramiro.films.domain.entity.model.Film;
-import com.ramiro.films.newmove.adapter.api.FilmResource;
-import com.ramiro.films.adapter.infra.repository.FilmRepository;
-import com.ramiro.films.domain.usecase.UploadFilms;
+import com.ramiro.films.domain.usecase.repository.AllFilms;
+import com.ramiro.films.domain.usecase.resource.FilmResource;
+
+import com.ramiro.films.domain.usecase.UploadFilmsUseCase;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Named;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
-@Component
+@Named
 @RequiredArgsConstructor
 @Slf4j
-public class UploadFilmsImpl implements UploadFilms {
+public class UploadFilmsUseCaseImpl implements UploadFilmsUseCase {
 
     private final FilmResource filmResource;
-    private final FilmRepository filmRepository;
+    private final AllFilms allFilms;
 
     @Getter
     private static Queue<String> WORDS_TO_SEARCH_FILMS = new LinkedList<>();
@@ -52,8 +53,8 @@ public class UploadFilmsImpl implements UploadFilms {
                         .map(f -> this.filmResource.getFilmById(f.getImdbID()))
                         .filter(f -> !f.getImdbRating().equals("N/A"))
                         .collect(Collectors.toList());
-        listFilms.stream().forEach(f -> filmRepository.save(Film.of(f)));
-        log.info("Films in DataBase: " + filmRepository.count());
+        listFilms.stream().forEach(f -> allFilms.add(Film.of(f)));
+        log.info("Total Films: " + allFilms.size());
         log.info("Finished Search Films...");
     }
 

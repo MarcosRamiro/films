@@ -1,7 +1,7 @@
 package com.ramiro.films.adapter.controller;
 
 import com.ramiro.films.adapter.dto.RankingResponse;
-import com.ramiro.films.service.RankingService;
+import com.ramiro.films.domain.usecase.RankingUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class RankingController {
 
-    private final RankingService rankingService;
+    private final RankingUseCase rankingUseCase;
 
     @Operation(summary = "ranking", description = "obtem o ranking dos jogadores.",
             security = {@SecurityRequirement(name = "BearerJWT")})
@@ -32,7 +32,7 @@ public class RankingController {
     @GetMapping
     public RankingResponse ranking() {
 
-        return rankingService.getRanking();
+        return RankingResponse.of(rankingUseCase.getRanking());
 
     }
 

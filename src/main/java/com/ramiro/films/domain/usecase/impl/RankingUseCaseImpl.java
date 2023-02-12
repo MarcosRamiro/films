@@ -1,30 +1,30 @@
-package com.ramiro.films.service.impl;
+package com.ramiro.films.domain.usecase.impl;
 
-import com.ramiro.films.adapter.dto.PositionResponse;
-import com.ramiro.films.adapter.dto.RankingResponse;
+import com.ramiro.films.domain.entity.dto.PositionDto;
+import com.ramiro.films.domain.entity.dto.RankingDto;
 import com.ramiro.films.domain.entity.model.Match;
-import com.ramiro.films.adapter.infra.repository.MatchRepository;
-import com.ramiro.films.service.RankingService;
 import com.ramiro.films.domain.type.StatusMoveEnum;
+import com.ramiro.films.domain.usecase.RankingUseCase;
+import com.ramiro.films.domain.usecase.repository.AllMatches;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Service
+@Named
 @RequiredArgsConstructor
-public class RankingServiceImpl implements RankingService {
+public class RankingUseCaseImpl implements RankingUseCase {
 
-    private final MatchRepository matchRepository;
+    private final AllMatches allMatches;
 
     @Override
-    public RankingResponse getRanking() {
+    public RankingDto getRanking() {
 
-        List<Match> matches = matchRepository.findAll();
+        List<Match> matches = allMatches.getAll();
 
         Map<String, Long> ranking = matches.stream()
                 .flatMap(match -> match.getMoves().stream())
@@ -38,15 +38,15 @@ public class RankingServiceImpl implements RankingService {
                         .reversed()).forEachOrdered(e -> finalResult.put(e.getKey(), e.getValue()));
 
         int position = 1;
-        List<PositionResponse> positions = new ArrayList<>();
+        List<PositionDto> positions = new ArrayList<>();
         for (Map.Entry<String, Long> entry : finalResult.entrySet()) {
-            positions.add(new PositionResponse(position, entry.getKey(), Integer.valueOf(entry.getValue().toString())));
+            positions.add(new PositionDto(position, entry.getKey(), Integer.valueOf(entry.getValue().toString())));
             position++;
         }
 
-        RankingResponse responseDto = new RankingResponse();
-        responseDto.setRanking(positions);
+        RankingDto rankingDto = new RankingDto();
+        rankingDto.setPositions(positions);
 
-        return responseDto;
+        return rankingDto;
     }
 }

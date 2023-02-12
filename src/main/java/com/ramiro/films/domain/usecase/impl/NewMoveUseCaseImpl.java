@@ -37,16 +37,16 @@ public class NewMoveUseCaseImpl implements NewMoveUseCase {
     private final AllMoves allMoves;
     private final AllFilms allFilms;
     private final AllUsers allUsers;
-    private final UploadFilms uploadFilms;
+    private final UploadFilmsUseCase uploadFilmsUseCase;
 
     @Inject
     public NewMoveUseCaseImpl(AllMatches allMatches, AllMoves allMoves, AllFilms allFilms,
-                              UploadFilms uploadFilms,
+                              UploadFilmsUseCase uploadFilmsUseCase,
                               AllUsers allUsers) {
         this.allMatches = allMatches;
         this.allMoves = allMoves;
         this.allFilms = allFilms;
-        this.uploadFilms = uploadFilms;
+        this.uploadFilmsUseCase = uploadFilmsUseCase;
         this.allUsers = allUsers;
     }
 
@@ -72,7 +72,7 @@ public class NewMoveUseCaseImpl implements NewMoveUseCase {
         Optional<Move> moveOptionalFinal = generateMove(match, moves, films);
 
         while (moveOptionalFinal.isEmpty()) {
-            uploadFilms.uploadFilms();
+            uploadFilmsUseCase.uploadFilms();
             films = getAllFilms();
             moveOptionalFinal = generateMove(match, moves, films);
         }

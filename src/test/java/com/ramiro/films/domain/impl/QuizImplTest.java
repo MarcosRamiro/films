@@ -12,7 +12,7 @@ import com.ramiro.films.adapter.infra.repository.FilmRepository;
 import com.ramiro.films.adapter.infra.repository.MatchRepository;
 import com.ramiro.films.adapter.infra.repository.MoveRepository;
 import com.ramiro.films.domain.entity.model.Move;
-import com.ramiro.films.domain.usecase.UploadFilms;
+import com.ramiro.films.domain.usecase.UploadFilmsUseCase;
 import com.ramiro.films.domain.type.FilmOptionEnum;
 import com.ramiro.films.domain.type.StatusMatchEnum;
 import com.ramiro.films.domain.type.StatusMoveEnum;
@@ -42,7 +42,7 @@ public class QuizImplTest {
     private QuizImpl quiz;
 
     @Mock
-    private UploadFilms uploadFilms;
+    private UploadFilmsUseCase uploadFilmsUseCase;
 
     @Mock
     private FilmRepository filmRepository;

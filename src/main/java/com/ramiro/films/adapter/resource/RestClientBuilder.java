@@ -1,6 +1,4 @@
-package com.ramiro.films.service.impl;
-
-import com.ramiro.films.service.RestClient;
+package com.ramiro.films.adapter.resource;
 
 public class RestClientBuilder {
 

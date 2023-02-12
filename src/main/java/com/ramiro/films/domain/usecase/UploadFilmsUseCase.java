@@ -1,5 +1,5 @@
 package com.ramiro.films.domain.usecase;
 
-public interface UploadFilms {
+public interface UploadFilmsUseCase {
     void uploadFilms();
 }

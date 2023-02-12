@@ -5,5 +5,11 @@ import com.ramiro.films.domain.entity.model.Film;
 import java.util.List;
 
 public interface AllFilms {
+
     List<Film> findAllFilms();
+
+    void add(Film film);
+
+    long size();
+
 }

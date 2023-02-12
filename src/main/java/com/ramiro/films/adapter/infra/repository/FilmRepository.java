@@ -11,7 +11,17 @@ import java.util.List;
 public interface FilmRepository extends AllFilms, JpaRepository<Film, Long> {
 
     @Override
-    default List<Film> findAllFilms(){
+    default List<Film> findAllFilms() {
         return this.findAll();
+    }
+
+    @Override
+    default void add(Film film) {
+        this.save(film);
+    }
+
+    @Override
+    default long size() {
+        return this.count();
     }
 }

@@ -1,8 +1,8 @@
 package com.ramiro.films.domain.impl;
 
 import com.ramiro.films.domain.entity.dto.FilmDto;
-import com.ramiro.films.newmove.adapter.UploadFilmsImpl;
-import com.ramiro.films.newmove.adapter.api.FilmResource;
+import com.ramiro.films.domain.usecase.impl.UploadFilmsUseCaseImpl;
+import com.ramiro.films.domain.usecase.resource.FilmResource;
 import com.ramiro.films.adapter.infra.repository.FilmRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 public class FilmDataBaseImplTest {
 
     @InjectMocks
-    private UploadFilmsImpl uploadFilms;
+    private UploadFilmsUseCaseImpl uploadFilms;
 
     @Mock
     FilmResource filmResource;
@@ -65,7 +65,7 @@ public class FilmDataBaseImplTest {
     public void deveGerarErroQuandoAListaDePalavrasAcabar() {
 
         List<FilmDto> films = getFilmes();
-        int qtdePalavras = UploadFilmsImpl.getWORDS_TO_SEARCH_FILMS().size();
+        int qtdePalavras = UploadFilmsUseCaseImpl.getWORDS_TO_SEARCH_FILMS().size();
         when(filmResource.searchFilmByTitle(anyString())).thenReturn(films);
         when(filmResource.getFilmById(anyString())).thenReturn(films.get(0));
         when(filmRepository.count()).thenReturn(1L);
