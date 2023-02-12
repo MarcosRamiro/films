@@ -82,7 +82,7 @@ public class UserAuthenticationProvider {
 
     }
 
-    public Authentication validadeCredentials(CredentialsRequest credentials)
+    public Authentication validateCredentials(CredentialsRequest credentials)
             throws UserNotFoundException, AuthenticationException {
 
         if (authenticateUserUseCase.validateCredentials(credentials)){

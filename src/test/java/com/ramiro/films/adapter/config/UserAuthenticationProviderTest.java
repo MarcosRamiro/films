@@ -104,7 +104,7 @@ public class UserAuthenticationProviderTest {
         when(authenticateUserUseCase.validateCredentials(any())).thenReturn(true);
         when(findUserUseCase.byUsername(any())).thenReturn(user);
 
-        Authentication authentication = userAuthenticationProvider.validadeCredentials(credentials);
+        Authentication authentication = userAuthenticationProvider.validateCredentials(credentials);
 
         assertEquals(user.getUsername(), ((UserDto) authentication.getPrincipal()).getUsername());
         verify(authenticateUserUseCase, times(1)).validateCredentials(any());

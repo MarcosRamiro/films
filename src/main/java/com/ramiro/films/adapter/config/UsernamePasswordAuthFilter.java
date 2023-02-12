@@ -32,7 +32,7 @@ public class UsernamePasswordAuthFilter extends OncePerRequestFilter {
             try {
 
                 SecurityContextHolder.getContext().setAuthentication(
-                        provider.validadeCredentials(credentials)
+                        provider.validateCredentials(credentials)
                 );
 
             } catch (UserNotFoundException e) {
