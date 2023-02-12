@@ -1,10 +1,10 @@
 package com.ramiro.films.service.impl;
 
-import com.ramiro.films.adapter.resource.RestClientBuilder;
+import com.ramiro.films.adapter.infra.resource.RestClientBuilder;
 import com.ramiro.films.domain.entity.dto.FilmDto;
 import com.ramiro.films.domain.entity.dto.FilmSearchDto;
-import com.ramiro.films.adapter.resource.impl.FilmResourceImpl;
-import com.ramiro.films.adapter.resource.RestClient;
+import com.ramiro.films.adapter.infra.resource.impl.FilmResourceImpl;
+import com.ramiro.films.adapter.infra.resource.RestClient;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

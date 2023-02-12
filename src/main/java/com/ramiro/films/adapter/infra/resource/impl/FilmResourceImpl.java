@@ -1,6 +1,6 @@
-package com.ramiro.films.adapter.resource.impl;
+package com.ramiro.films.adapter.infra.resource.impl;
 
-import com.ramiro.films.adapter.resource.RestClient;
+import com.ramiro.films.adapter.infra.resource.RestClient;
 import com.ramiro.films.domain.entity.dto.FilmDto;
 import com.ramiro.films.domain.entity.dto.FilmSearchDto;
 import com.ramiro.films.domain.usecase.resource.FilmResource;

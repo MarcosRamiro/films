@@ -1,7 +1,7 @@
-package com.ramiro.films.adapter.resource.impl;
+package com.ramiro.films.adapter.infra.resource.impl;
 
-import com.ramiro.films.adapter.resource.RestClient;
-import com.ramiro.films.adapter.resource.RestClientBuilder;
+import com.ramiro.films.adapter.infra.resource.RestClient;
+import com.ramiro.films.adapter.infra.resource.RestClientBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;

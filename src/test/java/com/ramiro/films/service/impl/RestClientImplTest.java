@@ -1,7 +1,7 @@
 package com.ramiro.films.service.impl;
 
-import com.ramiro.films.adapter.resource.RestClientBuilder;
-import com.ramiro.films.adapter.resource.impl.RestClientImpl;
+import com.ramiro.films.adapter.infra.resource.RestClientBuilder;
+import com.ramiro.films.adapter.infra.resource.impl.RestClientImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

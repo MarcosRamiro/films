@@ -1,8 +1,8 @@
 package com.ramiro.films.adapter.config;
 
 import com.ramiro.films.adapter.handler.MyErrorHandler;
-import com.ramiro.films.adapter.resource.RestClient;
-import com.ramiro.films.adapter.resource.impl.RestClientImpl;
+import com.ramiro.films.adapter.infra.resource.RestClient;
+import com.ramiro.films.adapter.infra.resource.impl.RestClientImpl;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

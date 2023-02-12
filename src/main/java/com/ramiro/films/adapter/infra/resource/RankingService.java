@@ -1,4 +1,4 @@
-package com.ramiro.films.adapter.resource;
+package com.ramiro.films.adapter.infra.resource;
 
 import com.ramiro.films.adapter.dto.RankingResponse;
 
