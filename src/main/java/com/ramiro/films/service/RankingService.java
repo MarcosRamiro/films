@@ -1,9 +1,9 @@
 package com.ramiro.films.service;
 
-import com.ramiro.films.dto.RankingResponseDto;
+import com.ramiro.films.adapter.dto.RankingResponse;
 
 public interface RankingService {
 
-    RankingResponseDto getRanking();
+    RankingResponse getRanking();
 
 }

@@ -1,11 +1,11 @@
 package com.ramiro.films.service.impl;
 
-import com.ramiro.films.dto.PositionResponseDto;
-import com.ramiro.films.dto.RankingResponseDto;
-import com.ramiro.films.model.Match;
-import com.ramiro.films.newmove.adapter.repo.MatchRepository;
+import com.ramiro.films.adapter.dto.PositionResponse;
+import com.ramiro.films.adapter.dto.RankingResponse;
+import com.ramiro.films.domain.entity.model.Match;
+import com.ramiro.films.adapter.infra.repository.MatchRepository;
 import com.ramiro.films.service.RankingService;
-import com.ramiro.films.type.StatusMoveEnum;
+import com.ramiro.films.domain.type.StatusMoveEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class RankingServiceImpl implements RankingService {
     private final MatchRepository matchRepository;
 
     @Override
-    public RankingResponseDto getRanking() {
+    public RankingResponse getRanking() {
 
         List<Match> matches = matchRepository.findAll();
 
@@ -38,13 +38,13 @@ public class RankingServiceImpl implements RankingService {
                         .reversed()).forEachOrdered(e -> finalResult.put(e.getKey(), e.getValue()));
 
         int position = 1;
-        List<PositionResponseDto> positions = new ArrayList<>();
+        List<PositionResponse> positions = new ArrayList<>();
         for (Map.Entry<String, Long> entry : finalResult.entrySet()) {
-            positions.add(new PositionResponseDto(position, entry.getKey(), Integer.valueOf(entry.getValue().toString())));
+            positions.add(new PositionResponse(position, entry.getKey(), Integer.valueOf(entry.getValue().toString())));
             position++;
         }
 
-        RankingResponseDto responseDto = new RankingResponseDto();
+        RankingResponse responseDto = new RankingResponse();
         responseDto.setRanking(positions);
 
         return responseDto;

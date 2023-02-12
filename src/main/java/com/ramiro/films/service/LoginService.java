@@ -1,10 +1,7 @@
 package com.ramiro.films.service;
 
-import com.ramiro.films.dto.UserDto;
+import com.ramiro.films.domain.entity.dto.UserDto;
 
 public interface LoginService {
-
-    void save(UserDto userDto);
-
-    void logout(UserDto user);
+        void logout(UserDto user);
 }

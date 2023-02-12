@@ -1,6 +1,6 @@
 package com.ramiro.films.newmove.adapter.api;
 
-import com.ramiro.films.dto.FilmDto;
+import com.ramiro.films.domain.entity.dto.FilmDto;
 
 import java.util.List;
 

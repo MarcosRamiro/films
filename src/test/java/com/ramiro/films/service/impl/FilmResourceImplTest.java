@@ -1,7 +1,7 @@
 package com.ramiro.films.service.impl;
 
-import com.ramiro.films.dto.FilmDto;
-import com.ramiro.films.dto.FilmSearchDto;
+import com.ramiro.films.domain.entity.dto.FilmDto;
+import com.ramiro.films.domain.entity.dto.FilmSearchDto;
 import com.ramiro.films.newmove.adapter.api.FilmResourceImpl;
 import com.ramiro.films.service.RestClient;
 import org.junit.jupiter.api.Test;

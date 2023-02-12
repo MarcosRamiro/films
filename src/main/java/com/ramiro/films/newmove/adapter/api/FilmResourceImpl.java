@@ -1,7 +1,7 @@
 package com.ramiro.films.newmove.adapter.api;
 
-import com.ramiro.films.dto.FilmDto;
-import com.ramiro.films.dto.FilmSearchDto;
+import com.ramiro.films.domain.entity.dto.FilmDto;
+import com.ramiro.films.domain.entity.dto.FilmSearchDto;
 import com.ramiro.films.service.RestClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

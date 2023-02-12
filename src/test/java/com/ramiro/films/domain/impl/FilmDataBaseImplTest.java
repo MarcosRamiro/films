@@ -1,9 +1,9 @@
 package com.ramiro.films.domain.impl;
 
-import com.ramiro.films.dto.FilmDto;
+import com.ramiro.films.domain.entity.dto.FilmDto;
 import com.ramiro.films.newmove.adapter.UploadFilmsImpl;
 import com.ramiro.films.newmove.adapter.api.FilmResource;
-import com.ramiro.films.newmove.adapter.repo.FilmRepository;
+import com.ramiro.films.adapter.infra.repository.FilmRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

@@ -1,11 +1,11 @@
 package com.ramiro.films.service.impl;
 
-import com.ramiro.films.dto.RankingResponseDto;
-import com.ramiro.films.model.Match;
-import com.ramiro.films.model.User;
-import com.ramiro.films.newmove.adapter.repo.MatchRepository;
-import com.ramiro.films.newmove.entity.Move;
-import com.ramiro.films.type.StatusMoveEnum;
+import com.ramiro.films.adapter.dto.RankingResponse;
+import com.ramiro.films.domain.entity.model.Match;
+import com.ramiro.films.domain.entity.model.User;
+import com.ramiro.films.adapter.infra.repository.MatchRepository;
+import com.ramiro.films.domain.entity.model.Move;
+import com.ramiro.films.domain.type.StatusMoveEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,7 +33,7 @@ public class RankingServiceImplTest {
 
         when(matchRepository.findAll()).thenReturn(listMatch());
 
-        RankingResponseDto resultadoRanking = rankingServiceImpl.getRanking();
+        RankingResponse resultadoRanking = rankingServiceImpl.getRanking();
 
         assertEquals(2, resultadoRanking.getRanking().size());
 

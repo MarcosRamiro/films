@@ -1,10 +1,10 @@
 package com.ramiro.films.newmove.adapter;
 
-import com.ramiro.films.dto.FilmDto;
-import com.ramiro.films.model.Film;
+import com.ramiro.films.domain.entity.dto.FilmDto;
+import com.ramiro.films.domain.entity.model.Film;
 import com.ramiro.films.newmove.adapter.api.FilmResource;
-import com.ramiro.films.newmove.adapter.repo.FilmRepository;
-import com.ramiro.films.newmove.usecase.UploadFilms;
+import com.ramiro.films.adapter.infra.repository.FilmRepository;
+import com.ramiro.films.domain.usecase.UploadFilms;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
