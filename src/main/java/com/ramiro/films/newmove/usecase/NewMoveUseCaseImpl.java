@@ -17,7 +17,7 @@ import java.util.Optional;
  *  - Não há utilização de nenhuma classe/metadado do Spring
  *  - Indireção via Injeção de Depedência
  *  - Testável: possível 'mockar' todos as dependências
- *  - Independente de Baco de Dados
+ *  - Independente de Banco de Dados
  *  - Independente de recursos externos
  */
 
