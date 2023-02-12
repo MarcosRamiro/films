@@ -1,8 +1,8 @@
 package com.ramiro.films.adapter.controller;
 
 import com.ramiro.films.adapter.dto.MoveResponse;
+import com.ramiro.films.domain.entity.dto.MoveDto;
 import com.ramiro.films.domain.entity.dto.UserDto;
-import com.ramiro.films.domain.entity.model.Move;
 import com.ramiro.films.domain.exceptions.MatchNotFoundException;
 import com.ramiro.films.domain.usecase.NewMoveUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +45,7 @@ public class QuizNewMoveController {
     @PostMapping("/newMove")
     public MoveResponse newMove(@Parameter(hidden = true) @AuthenticationPrincipal UserDto userDto)
             throws MatchNotFoundException {
-        Move move = useCase.newMove(userDto);
+        MoveDto move = useCase.newMove(userDto);
         return MoveResponse.of(move);
     }
 

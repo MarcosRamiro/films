@@ -1,7 +1,7 @@
 package com.ramiro.films.adapter.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ramiro.films.domain.entity.model.Film;
+import com.ramiro.films.domain.entity.dto.FilmDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -24,7 +24,7 @@ public class FilmResponse {
     @JsonProperty("actors")
     private String actors;
 
-    public static FilmResponse of(Film film) {
+    public static FilmResponse of(FilmDto film) {
         return new FilmResponse(film.getTitle(), film.getYear(), film.getReleased(), film.getDirector(), film.getActors());
 
     }

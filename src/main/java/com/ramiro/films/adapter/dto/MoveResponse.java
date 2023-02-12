@@ -1,7 +1,7 @@
 package com.ramiro.films.adapter.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ramiro.films.domain.entity.model.Move;
+import com.ramiro.films.domain.entity.dto.MoveDto;
 import lombok.Data;
 
 @Data
@@ -16,7 +16,7 @@ public class MoveResponse {
     @JsonProperty("filme_B")
     public FilmResponse filmB;
 
-    public static MoveResponse of(Move move) {
+    public static MoveResponse of(MoveDto move) {
         MoveResponse moveResponse = new MoveResponse();
         moveResponse.setFilmA(FilmResponse.of(move.getFilmA()));
         moveResponse.setFilmB(FilmResponse.of(move.getFilmB()));

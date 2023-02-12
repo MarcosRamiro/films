@@ -69,4 +69,8 @@ public class Film {
 
     }
 
+    public FilmDto toDto() {
+        return FilmDto.of(this);
+    }
+
 }

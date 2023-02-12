@@ -1,5 +1,6 @@
 package com.ramiro.films.domain.usecase.impl;
 
+import com.ramiro.films.domain.entity.dto.MoveDto;
 import com.ramiro.films.domain.entity.dto.UserDto;
 import com.ramiro.films.domain.usecase.*;
 import com.ramiro.films.domain.usecase.repository.AllFilms;
@@ -50,7 +51,7 @@ public class NewMoveUseCaseImpl implements NewMoveUseCase {
     }
 
     @Override
-    public Move newMove(UserDto userDto) throws MatchNotFoundException {
+    public MoveDto newMove(UserDto userDto) throws MatchNotFoundException {
 
         User user = allUsers.findUserByUsername(userDto.getUsername()).get();
 
@@ -64,7 +65,7 @@ public class NewMoveUseCaseImpl implements NewMoveUseCase {
                             .filter(m -> m.getStatus().equals(StatusMoveEnum.PENDING))
                             .findFirst();
         if (movePending.isPresent())
-            return movePending.get();
+            return prepareReturn(movePending.get());
 
         List<Film> films = getAllFilms();
 
@@ -79,7 +80,7 @@ public class NewMoveUseCaseImpl implements NewMoveUseCase {
         Move move = moveOptionalFinal.get();
         allMoves.add(move);
 
-        return move;
+        return prepareReturn(move);
     }
 
     private Optional<Move> generateMove(Match match, List<Move> moves, List<Film> films) {
@@ -110,6 +111,10 @@ public class NewMoveUseCaseImpl implements NewMoveUseCase {
 
     private List<Film> getAllFilms() {
         return allFilms.findAllFilms();
+    }
+
+    private MoveDto prepareReturn(Move move){
+        return move.toDto();
     }
 
 

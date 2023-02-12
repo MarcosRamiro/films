@@ -1,5 +1,6 @@
 package com.ramiro.films.domain.entity.model;
 
+import com.ramiro.films.domain.entity.dto.MoveDto;
 import com.ramiro.films.domain.type.StatusMoveEnum;
 import lombok.Data;
 
@@ -36,6 +37,13 @@ public class Move {
         this.filmA = filmA;
         this.filmB = filmB;
         this.status = StatusMoveEnum.PENDING;
+    }
+
+    public MoveDto toDto() {
+        MoveDto newMove = new MoveDto();
+        newMove.setFilmA(this.filmA.toDto());
+        newMove.setFilmB(this.filmB.toDto());
+        return newMove;
     }
 
 }
